@@ -36,6 +36,7 @@ a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
 .bars .fill{height:100%;border-radius:7px}
 
 #legenda li:hover{background:#F3F5F7}
+#dc-abrir:not([hidden]){display:block}
 @media (max-width:720px){
   #donut-wrap{grid-template-columns:1fr !important}
 }
@@ -75,15 +76,17 @@ a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
 <h2 style="margin:0 0 6px;font-size:22px">Para onde vai o OGE</h2>
 <div style="color:#4B5563;font-size:14px;margin-bottom:16px">Cada fatia é proporcional ao peso no orçamento total. O serviço da dívida aparece a vermelho.</div>
 <div style="display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:28px;align-items:center" id="donut-wrap">
-  <div style="position:relative;max-width:340px;margin:0 auto">
-    <svg id="donut" viewBox="0 0 200 200" role="group" aria-label="Despesa do OGE por função" style="width:100%;height:auto;display:block"></svg>
-    <div id="donut-centro" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center">
-      <div style="font-size:12px;color:#4B5563" id="dc-nome">Total OGE</div>
-      <div style="font:500 19px 'IBM Plex Mono',monospace" id="dc-val">—</div>
-      <div style="font-size:12px;color:#4B5563" id="dc-pct"></div>
+  <div>
+    <div style="position:relative;max-width:340px;margin:0 auto">
+      <svg id="donut" viewBox="0 0 200 200" role="group" aria-label="Despesa do OGE por função" style="width:100%;height:auto;display:block"></svg>
+      <div id="donut-centro" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center">
+        <div style="font-size:12px;color:#4B5563" id="dc-nome">Total OGE</div>
+        <div style="font:500 19px 'IBM Plex Mono',monospace" id="dc-val">—</div>
+        <div style="font-size:12px;color:#4B5563" id="dc-pct"></div>
+      </div>
     </div>
+    <a id="dc-abrir" hidden style="text-align:center;font-weight:600;color:#B80F2D;margin-top:10px"></a>
   </div>
-  <a id="dc-abrir" hidden style="display:block;text-align:center;font-weight:600;color:#B80F2D;margin-top:10px"></a>
   <ul id="legenda" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;font-size:14px"></ul>
 </div>
 </section>
