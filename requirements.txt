@@ -4,5 +4,5 @@ pydantic>=2.6
 
 # Só para desenvolvimento local e para a ingestão (não necessário em runtime no Vercel):
 sqlalchemy>=2.0,<2.1
-uvicorn>=0.29
+uvicorn>=0.54.0
 pytest>=8
