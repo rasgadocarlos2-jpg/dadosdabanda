@@ -1,6 +1,6 @@
 fastapi>=0.110,<0.120
 httpx>=0.27
-pydantic>=2.6
+pydantic>=2.14.3
 
 # Só para desenvolvimento local e para a ingestão (não necessário em runtime no Vercel):
 sqlalchemy>=2.0,<2.1
