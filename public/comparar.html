@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparar séries · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.btn--primary{background:#B80F2D;border-color:#B80F2D;color:#fff}
+select{font:400 15px 'IBM Plex Sans',sans-serif;min-height:44px;border:1px solid #CBD2D9;border-radius:8px;padding:0 10px;background:#fff;width:100%;min-width:0;max-width:100%}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div><h1 style="margin:0 0 8px;font-size:36px">Comparar séries</h1><p style="margin:0;color:#4B5563;max-width:720px">Escolhe 2 a 4 séries e vê-as sobrepostas no mesmo gráfico. Útil para comparar fontes (ex: Banco Mundial vs FMI para inflação).</p></div>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end" id="pickers">
+<div style="display:flex;flex-direction:column;gap:4px;flex:1 1 220px;min-width:0"><label style="font-size:13px;color:#4B5563" for="s1">Série 1</label><select id="s1"></select></div>
+<div style="display:flex;flex-direction:column;gap:4px;flex:1 1 220px;min-width:0"><label style="font-size:13px;color:#4B5563" for="s2">Série 2</label><select id="s2"></select></div>
+<div style="display:flex;flex-direction:column;gap:4px;flex:1 1 220px;min-width:0"><label style="font-size:13px;color:#4B5563" for="s3">Série 3 (opcional)</label><select id="s3"><option value="">—</option></select></div>
+<div style="display:flex;flex-direction:column;gap:4px;flex:1 1 220px;min-width:0"><label style="font-size:13px;color:#4B5563" for="s4">Série 4 (opcional)</label><select id="s4"><option value="">—</option></select></div>
+<button class="btn btn--primary" onclick="desenhar()">Comparar</button>
+</div>
+<div id="aviso" aria-live="polite" style="font-size:13px;color:#4B5563;padding:10px 12px;background:#F3F5F7;border-radius:8px;display:none"></div>
+<svg id="chart" viewBox="0 0 1100 320" role="img" aria-label="Gráfico de comparação das séries escolhidas. Cada série tem ficha própria com tabela de valores." style="width:100%;height:auto;max-height:360px"></svg>
+<div id="legenda" style="display:flex;gap:16px;flex-wrap:wrap;font-size:14px"></div>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px 24px">
+<h2 style="font-size:17px;margin:0 0 6px">Sugestões</h2>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn" onclick="aplicar(['wb_inflacao','imf_inflacao'])">Inflação: WB vs FMI</button>
+<button class="btn" onclick="aplicar(['wb_pib_crescimento','imf_pib_crescimento'])">PIB: WB vs FMI</button>
+<button class="btn" onclick="aplicar(['bna_cambio_usd','bna_cambio_eur','bna_cambio_cny'])">Câmbios: USD / EUR / CNY</button>
+<button class="btn" onclick="aplicar(['owid_esperanca_vida','owid_mortalidade_infantil'])">Saúde: vida vs mortalidade</button>
+</div>
+</section>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+
+<script type="module">
+import { api, fmt, aoRedimensionar } from "/static/app.js?v=7";
+
+const CORES = ["#B80F2D", "#14274E", "#0F6B3E", "#7A4B00"];
+let SERIES = [];
+
+(async () => {
+  try {
+    SERIES = await api.series();
+  } catch (e) {
+    document.getElementById("aviso").textContent = "Não consegui carregar a lista de séries: " + e.message;
+    document.getElementById("aviso").style.display = "block";
+    return;
+  }
+  for (const id of ["s1","s2","s3","s4"]) {
+    const sel = document.getElementById(id);
+    for (const s of SERIES.filter(x => !x.id.startsWith("cge_"))) {
+      const opt = document.createElement("option");
+      opt.value = s.id; opt.textContent = `${s.nome} (${s.fonte})`;
+      sel.appendChild(opt);
+    }
+  }
+  document.getElementById("s1").value = "wb_inflacao";
+  document.getElementById("s2").value = "imf_inflacao";
+  desenhar();
+})();
+
+window.aplicar = (ids) => {
+  for (let i = 0; i < 4; i++) {
+    document.getElementById(`s${i+1}`).value = ids[i] || "";
+  }
+  desenhar();
+};
+
+window.desenhar = async () => {
+  const ids = ["s1","s2","s3","s4"].map(x => document.getElementById(x).value).filter(Boolean);
+  if (ids.length < 2) {
+    document.getElementById("aviso").textContent = "Escolhe pelo menos 2 séries.";
+    document.getElementById("aviso").style.display = "block";
+    return;
+  }
+  try {
+    const data = await api.comparar(ids);
+    document.getElementById("aviso").textContent = data.aviso + (ids.some(i => i.startsWith("imf_")) ? ` As séries do FMI incluem previsões a partir de ${new Date().getFullYear()}.` : "");
+    document.getElementById("aviso").style.display = "block";
+    desenharMulti(data);
+    const svg = document.getElementById("chart");
+    aoRedimensionar(svg, () => desenharMulti(data));
+  } catch (e) {
+    document.getElementById("aviso").textContent = "Erro: " + e.message;
+    document.getElementById("aviso").style.display = "block";
+  }
+};
+
+function periodoNum(p) {
+  const [a, m = "1", d = "1"] = String(p).split("-");
+  return parseInt(a, 10) + (parseInt(m, 10) - 1) / 12 + (parseInt(d, 10) - 1) / 365;
+}
+
+function desenharMulti(data) {
+  const svg = document.getElementById("chart");
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const W = Math.max(280, Math.round(svg.clientWidth || 1100));
+  const estreito = W < 600, H = estreito ? 260 : 320, L = estreito ? 46 : 60, R = estreito ? 10 : 20, T = 20, B = 40;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (n, a={}, t) => { const e = document.createElementNS(NS, n); for (const [k,v] of Object.entries(a)) e.setAttribute(k,v); if (t!=null) e.textContent = t; return e; };
+
+  const sids = data.series.map(s => s.id);
+  const xs = data.linhas.map(l => periodoNum(l.periodo));
+  const allVals = data.linhas.flatMap(l => sids.map(s => l.valores[s]).filter(v => v != null));
+  if (!allVals.length) { svg.appendChild(el("text", {x:20,y:40,fill:"#4B5563"}, "Sem dados em comum.")); return; }
+  const xMin = Math.min(...xs), xMax = Math.max(...xs);
+  const yMin = Math.min(...allVals), yMax = Math.max(...allVals);
+  const yPad = (yMax - yMin) * 0.1 || 1;
+  const yLo = yMin - yPad, yHi = yMax + yPad;
+  const sx = x => L + (W-L-R) * ((x - xMin) / Math.max(1e-9, xMax - xMin));
+  const sy = y => T + (H-T-B) * (1 - (y - yLo) / (yHi - yLo));
+
+  svg.style.touchAction = "pan-y";
+
+  for (let i = 0; i <= 4; i++) {
+    const yv = yLo + (yHi-yLo)*(i/4), y = sy(yv);
+    svg.appendChild(el("line", {x1:L,y1:y,x2:W-R,y2:y,stroke:"#E3E6EA"}));
+    svg.appendChild(el("text", {x:8,y:y+4,"font-size":12,fill:"#4B5563","font-family":"IBM Plex Sans,sans-serif"}, fmt(yv,1)));
+  }
+  const n = Math.min(estreito ? 3 : 6, data.linhas.length);
+  for (let i = 0; i < n; i++) {
+    const idx = Math.round((data.linhas.length-1) * (i/Math.max(1,n-1)));
+    svg.appendChild(el("text", {x:Math.max(L,Math.min(W-60,sx(xs[idx])-20)),y:H-12,"font-size":12,fill:"#4B5563","font-family":"IBM Plex Sans,sans-serif"}, data.linhas[idx].periodo));
+  }
+
+  sids.forEach((sid, idx) => {
+    const cor = CORES[idx % CORES.length];
+    const pts = data.linhas
+      .map((l,i) => l.valores[sid] != null ? `${sx(xs[i])},${sy(l.valores[sid])}` : null)
+      .filter(Boolean).join(" ");
+    svg.appendChild(el("polyline", {points: pts, fill:"none", stroke:cor, "stroke-width":2.5, "stroke-linejoin":"round"}));
+  });
+
+  // Interatividade: crosshair + ponto por série + caixa com valores
+  const cross = el("line", {x1:0,y1:T,x2:0,y2:H-B,stroke:"#9AA3AE","stroke-width":1,"stroke-dasharray":"4 4",opacity:0});
+  svg.appendChild(cross);
+  const dots = sids.map((_, i) => {
+    const c = el("circle", {r:5, fill: CORES[i%CORES.length], opacity:0});
+    svg.appendChild(c);
+    return c;
+  });
+  const boxBg = el("rect", {rx:8, ry:8, fill:"#14274E", opacity:0});
+  svg.appendChild(boxBg);
+  const boxTitle = el("text", {fill:"#fff","font-size":12,"font-weight":600,"font-family":"IBM Plex Sans,sans-serif",opacity:0});
+  svg.appendChild(boxTitle);
+  const boxLines = sids.map((_, i) => {
+    const sw = el("rect", {width:10,height:3,rx:1.5,fill:CORES[i%CORES.length],opacity:0});
+    const txt = el("text", {fill:"#fff","font-size":12,"font-family":"IBM Plex Mono,ui-monospace,monospace",opacity:0});
+    svg.appendChild(sw); svg.appendChild(txt);
+    return {sw, txt};
+  });
+
+  function mostrar(i) {
+    const linha = data.linhas[i];
+    const x = sx(xs[i]);
+    cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.setAttribute("opacity", 1);
+
+    const lines = sids.map((sid, j) => {
+      const v = linha.valores[sid];
+      const name = data.series[j].nome;
+      const unid = data.series[j].unidade || "";
+      if (v == null) {
+        dots[j].setAttribute("opacity", 0);
+        return { text: estreito ? "—" : `${name}: —`, hasVal: false };
+      }
+      const y = sy(v);
+      dots[j].setAttribute("cx", x); dots[j].setAttribute("cy", y); dots[j].setAttribute("opacity", 1);
+      return { text: (estreito ? `${fmt(v,2)} ${unid}` : `${name}: ${fmt(v,2)} ${unid}`).trim(), hasVal: true };
+    });
+
+    const maxLen = Math.max(linha.periodo.length, ...lines.map(l => l.text.length));
+    const bw = Math.max(140, maxLen * 7.2 + 24);
+    const bh = 22 + sids.length * 18 + 8;
+    let bx = x + 12, by = T + 6;
+    if (bx + bw > W - R) bx = x - bw - 12;
+    bx = Math.max(4, Math.min(bx, W - bw - 4));
+
+    boxBg.setAttribute("x", bx); boxBg.setAttribute("y", by);
+    boxBg.setAttribute("width", bw); boxBg.setAttribute("height", bh);
+    boxBg.setAttribute("opacity", 0.95);
+    boxTitle.setAttribute("x", bx + 10); boxTitle.setAttribute("y", by + 16);
+    boxTitle.setAttribute("opacity", 1);
+    boxTitle.textContent = linha.periodo;
+
+    boxLines.forEach(({sw, txt}, j) => {
+      const yy = by + 32 + j * 18;
+      sw.setAttribute("x", bx + 10); sw.setAttribute("y", yy - 4);
+      sw.setAttribute("opacity", lines[j].hasVal ? 1 : 0.3);
+      txt.setAttribute("x", bx + 26); txt.setAttribute("y", yy + 2);
+      txt.setAttribute("opacity", 1);
+      txt.setAttribute("fill", lines[j].hasVal ? "#fff" : "#9AA3AE");
+      txt.textContent = lines[j].text;
+    });
+  }
+
+  function indiceNoCursor(ev) {
+    const rect = svg.getBoundingClientRect();
+    const pt = ev.touches ? ev.touches[0] : ev;
+    const cx = ((pt.clientX - rect.left) / rect.width) * W;
+    const xVal = xMin + (cx - L) * (xMax - xMin) / (W - L - R);
+    let best = 0, bestD = Infinity;
+    for (let i = 0; i < xs.length; i++) {
+      const d = Math.abs(xs[i] - xVal);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    return best;
+  }
+
+  const onMove = (ev) => { mostrar(indiceNoCursor(ev)); if (ev.cancelable && ev.touches) ev.preventDefault(); };
+  svg._eventos?.abort();
+  svg._eventos = new AbortController();
+  const signal = svg._eventos.signal;
+  svg.addEventListener("mousemove", onMove, { signal });
+  svg.addEventListener("touchstart", onMove, { passive: false, signal });
+  svg.addEventListener("touchmove", onMove, { passive: false, signal });
+
+  mostrar(data.linhas.length - 1);  // começa no último período
+
+  // Legenda
+  const leg = document.getElementById("legenda");
+  leg.innerHTML = "";
+  data.series.forEach((s, i) => {
+    const div = document.createElement("div");
+    div.style.cssText = "display:flex;align-items:center;gap:6px";
+    div.innerHTML = `<span style="width:14px;height:3px;background:${CORES[i%CORES.length]};display:inline-block"></span><strong>${s.nome}</strong> <span style="color:#4B5563">· ${s.fonte} · ${s.unidade}</span>`;
+    leg.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>

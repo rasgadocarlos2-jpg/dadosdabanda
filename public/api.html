@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API pública e gratuita — Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+.code-block { background: #14274E; color: #E5E8EC; border-radius: 12px; padding: 20px; font: 400 14px/1.6 'IBM Plex Mono', ui-monospace, monospace; overflow-x: auto; white-space: pre; }
+.key-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.key-card .title { font-weight: 700; font-size: 18px; }
+.key-card label { font-size: 14px; color: var(--fg-muted); }
+.key-card input { border: 1px solid var(--border-strong); border-radius: 8px; min-height: 44px; padding: 0 12px; font: 400 16px 'IBM Plex Sans', sans-serif; background: var(--surface); color: inherit; }
+.key-card .limit { font-size: 13px; color: var(--fg-muted); }
+.key-card .result { background: var(--pill-bg); border-radius: 8px; padding: 12px; font: 500 14px 'IBM Plex Mono', monospace; word-break: break-all; display: none; }
+.key-card .result.on { display: block; }
+.datasets-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+.datasets-card .title { font-weight: 600; margin-bottom: 10px; }
+.pill { background: var(--pill-bg); border-radius: 999px; padding: 6px 12px; font-size: 14px; display: inline-block; }
+body.econ .code-block { background: #000; color: #fff; }
+</style>
+<script src="/static/head-boost.js?v=6"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+    <nav class="nav"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+    
+  </div>
+</header>
+
+<main>
+  <div>
+    <h1 style="font-size:36px;margin-bottom:8px">API pública e gratuita</h1>
+    <p class="lead" style="margin:0;font-size:17px;color:var(--fg-muted);max-width:700px">Usa os dados do Dados da Banda nas tuas aplicações. A leitura é aberta e não precisa de chave: faz o pedido e recebe JSON ou CSV com a fonte de cada valor.</p>
+  </div>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start">
+    <div class="code-block">GET https://dadosdabanda.vercel.app/v1/series/bna_cambio_usd/observacoes?de=2004
+
+{
+  "id": "bna_cambio_usd",
+  "nome": "Câmbio de referência USD/AOA (BNA)",
+  "unidade": "AOA por USD",
+  "periodicidade": "mensal",
+  "fonte": "Frankfurter · referência BNA",
+  "url_consulta": "https://api.frankfurter.dev/...",
+  "observacoes": [
+    {"periodo": "2004-01", "valor": 85.47, "recolhido_em": "..."},
+    {"periodo": "2026-10", "valor": 909.09, "recolhido_em": "..."}
+  ]
+}</div>
+
+    <form class="key-card" id="keyForm" onsubmit="return gerar(event)">
+      <div class="title">Chave opcional</div>
+      <label for="m">E-mail</label>
+      <input id="m" type="email" placeholder="nome@exemplo.ao" required>
+      <button class="btn btn--primary" type="submit">Gerar chave</button>
+      <div class="limit">Sem chave, o limite aproximado de 60 pedidos por minuto é partilhado por IP. Com chave, passa a ser só teu.</div>
+      <div class="result" id="result"></div>
+    </form>
+  </section>
+
+  <section class="datasets-card">
+    <div class="title">Conjuntos de dados disponíveis</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap" id="pills">
+      <span class="pill">Câmbio BNA (mensal)</span>
+      <span class="pill">Inflação (anual)</span>
+      <span class="pill">PIB</span>
+      <span class="pill">População</span>
+      <span class="pill">Dívida pública</span>
+      <span class="pill">Legislação (pendente)</span>
+      <span class="pill">Orçamento 2011-2026</span>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/docs" style="font-weight:600;color:var(--accent)">Abrir documentação completa (Swagger) →</a>
+      <a href="/painel.html" style="font-weight:600;color:var(--accent)">Ver no Painel →</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="font-size:22px;margin-bottom:12px">Endpoints</h2>
+    <pre>GET /saude                                       sem chave
+GET /v1/fontes                                    sem chave
+POST /v1/chaves                                   sem chave  { "email": "..." }
+GET /v1/series?fonte=&amp;q=                        chave opcional
+GET /v1/series/{id}                               chave opcional
+GET /v1/series/{id}/observacoes?de=&amp;ate=&amp;formato=json|csv
+GET /v1/comparar?series=A&amp;series=B&amp;de=&amp;ate=   (2 a 4 séries)</pre>
+  </section>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+
+<script type="module">
+import { setApiKey, initHeader } from "/static/app.js?v=7";
+initHeader();
+window.gerar = async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("m").value.trim();
+  const r = document.getElementById("result");
+  r.classList.remove("on");
+  try {
+    const resp = await fetch("/v1/chaves", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ email }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.detail || "erro");
+    setApiKey(data.chave);
+    r.innerHTML = `<strong>Guarda esta chave agora — não voltamos a mostrá-la:</strong><br>${data.chave}<br><em style="font-weight:400;color:var(--fg-muted)">Já ficou guardada no browser para esta sessão.</em>`;
+    r.classList.add("on");
+  } catch (err) {
+    r.innerHTML = `<strong style="color:var(--accent)">Erro:</strong> ${err.message}`;
+    r.classList.add("on");
+  }
+  return false;
+};
+</script>
+</body>
+</html>

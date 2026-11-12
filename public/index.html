@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Início · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:48px;align-items:center}.hero-mos svg{display:block;width:100%;height:auto;border-radius:12px}@media(max-width:940px){.hero-grid{grid-template-columns:1fr}.hero-mos{display:none}}
+.tag{font:600 12px 'IBM Plex Sans',sans-serif;padding:4px 10px;border-radius:999px}
+</style>
+<script src="/static/head-boost.js?v=6"></script>
+</head>
+<body>
+<div style="min-height:900px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:56px 24px;display:flex;flex-direction:column;gap:48px;width:100%;box-sizing:border-box">
+<div class="hero-grid"><section style="display:flex;flex-direction:column;gap:20px;max-width:760px;min-width:0">
+<h1 style="margin:0;font-size:48px;line-height:1.1">Os dados oficiais de Angola, finalmente legíveis.</h1>
+<p style="margin:0;font-size:18px;line-height:1.5;color:#4B5563">Estatística, orçamento e finanças públicas num só lugar, com a fonte identificada em cada série.</p>
+<form style="display:flex;gap:8px;background:#fff;border:1px solid #CBD2D9;border-radius:12px;padding:8px" onsubmit="return pesquisar(event)">
+<label for="q" style="position:absolute;left:-9999px">Pesquisar</label>
+<input id="q" placeholder="Ex.: inflação, câmbio, petróleo, PIB…" style="flex:1;border:0;font:400 16px 'IBM Plex Sans',sans-serif;padding:0 12px;min-height:44px;outline:none">
+<button class="btn" style="background:#B80F2D;border-color:#B80F2D;color:#fff" type="submit">Pesquisar</button></form>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<a href="/painel.html?s=ine_ipcn_variacao_mensal" class="tag" style="background:#E5E8EC">Inflação</a>
+<a href="/painel.html?s=bna_cambio_usd" class="tag" style="background:#E5E8EC">Câmbio</a>
+<a href="/orcamento.html" class="tag" style="background:#E5E8EC">Orçamento</a>
+<a href="/pdfs.html" class="tag" style="background:#E5E8EC">PDFs MINFIN</a>
+<a href="/regional.html" class="tag" style="background:#E5E8EC">Por província</a>
+</div>
+</section>
+
+<div class="hero-mos" aria-hidden="true"><svg viewBox="0 0 352 352" width="352" height="352" style="display:block"><rect width="352" height="352" fill="#F3F5F7"/><path transform="translate(0 0) rotate(180 44.0 44.0)" fill="#14274E" d="M0 0H88A88 88 0 0 1 0 88Z"/><g transform="translate(88 0) rotate(0 44.0 44.0)" fill="#14274E"><rect width="88" height="22.0"/><rect y="33.0" width="88" height="22.0"/><rect y="66.0" width="88" height="22.0"/></g><path transform="translate(176 0) rotate(0 44.0 44.0)" fill="#14274E" d="M0 0H88A88 88 0 0 1 0 88Z"/><circle transform="translate(264 0) rotate(90 44.0 44.0)" fill="#14274E" cx="44.0" cy="44.0" r="44.0"/><g transform="translate(0 88) rotate(90 44.0 44.0)" fill="#D9DEE5"><rect width="88" height="22.0"/><rect y="33.0" width="88" height="22.0"/><rect y="66.0" width="88" height="22.0"/></g><circle transform="translate(88 88) rotate(90 44.0 44.0)" fill="#14274E" cx="44.0" cy="44.0" r="44.0"/><path transform="translate(176 88) rotate(90 44.0 44.0)" fill="#B80F2D" d="M0 0H88A88 88 0 0 1 0 88Z"/><path transform="translate(0 176) rotate(270 44.0 44.0)" fill="#14274E" d="M0 0H88A88 88 0 0 1 0 88Z"/><rect transform="translate(88 176) rotate(180 44.0 44.0)" fill="#B80F2D" width="88" height="88"/><g transform="translate(176 176) rotate(0 44.0 44.0)" fill="#D9DEE5"><rect width="88" height="22.0"/><rect y="33.0" width="88" height="22.0"/><rect y="66.0" width="88" height="22.0"/></g><g transform="translate(264 176) rotate(180 44.0 44.0)" fill="#B80F2D"><rect width="88" height="22.0"/><rect y="33.0" width="88" height="22.0"/><rect y="66.0" width="88" height="22.0"/></g><circle transform="translate(0 264) rotate(0 44.0 44.0)" fill="#14274E" cx="44.0" cy="44.0" r="44.0"/><rect transform="translate(88 264) rotate(0 44.0 44.0)" fill="#B80F2D" width="88" height="88"/><path transform="translate(176 264) rotate(270 44.0 44.0)" fill="#14274E" d="M0 0H44.0A44.0 44.0 0 0 1 44.0 88H0Z"/><path transform="translate(264 264) rotate(90 44.0 44.0)" fill="#B80F2D" d="M0 0H44.0A44.0 44.0 0 0 1 44.0 88H0Z"/></svg></div></div>
+<section id="tiles" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px"></section>
+
+<section style="display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-size:22px">Comparar fontes</h2>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+<div style="flex:1;min-width:280px">
+<div style="font-weight:600;margin-bottom:6px">O Banco Mundial e o FMI nem sempre dizem o mesmo</div>
+<div style="color:#4B5563;font-size:15px;line-height:1.5">Põe duas séries lado a lado e vê onde divergem. Útil para investigar revisões e metodologias diferentes.</div>
+</div>
+<a href="/comparar.html" class="btn" style="background:#B80F2D;border-color:#B80F2D;color:#fff;text-decoration:none">Abrir comparador →</a>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-size:22px">Desmontador do OGE</h2>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+<div style="flex:1;min-width:280px">
+<div style="font-weight:600;margin-bottom:6px">Para onde vai o dinheiro público</div>
+<div style="color:#4B5563;font-size:15px;line-height:1.5">Decomposição funcional do OGE 2011-2026 — 16 anos de dados extraídos directamente dos PDFs oficiais do MINFIN. Inclui execução real via Conta Geral do Estado.</div>
+</div>
+<a href="/orcamento.html" class="btn" style="background:#B80F2D;border-color:#B80F2D;color:#fff;text-decoration:none">Abrir desmontador →</a>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-size:22px">Catálogo MINFIN</h2>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+<div style="flex:1;min-width:280px">
+<div style="font-weight:600;margin-bottom:6px">331 PDFs oficiais, com pesquisa</div>
+<div style="color:#4B5563;font-size:15px;line-height:1.5">OGE aprovado, Relatórios Trimestrais de Execução (REOGE) e Conta Geral do Estado (CGE), 2010-2026. Downloads directos do CMS do MINFIN.</div>
+</div>
+<a href="/pdfs.html" class="btn" style="text-decoration:none">Abrir catálogo →</a>
+</div>
+</section>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</div>
+
+<script type="module">
+import { api, fmt, sem } from "/static/app.js?v=7";
+const TILES = [
+  { id:"wb_inflacao",      label:"Inflação, CPI anual",            fonte:"Fonte: Banco Mundial", unidade:"%" },
+  { id:"bna_cambio_usd",   label:"Câmbio USD/AOA, mês mais recente",fonte:"Fonte: Frankfurter · ref. BNA", unidade:"AOA" },
+  { id:"wb_pib_crescimento", label:"Crescimento anual do PIB",    fonte:"Fonte: Banco Mundial", unidade:"%" },
+];
+const ATALHOS = { oge: "/orcamento.html", orcamento: "/orcamento.html", provincia: "/regional.html", provincias: "/regional.html",
+  pdf: "/pdfs.html", pdfs: "/pdfs.html", inflacao: "/painel.html?s=ine_ipcn_variacao_mensal", cambio: "/painel.html?s=bna_cambio_usd",
+  dolar: "/painel.html?s=bna_cambio_usd", pib: "/painel.html?s=wb_pib_crescimento", divida: "/painel.html?s=imf_divida" };
+window.pesquisar = (e) => {
+  e.preventDefault();
+  const q = document.getElementById("q").value.trim();
+  if (q) location.href = ATALHOS[sem(q)] || `/series.html?q=${encodeURIComponent(q)}`;
+  return false;
+};
+
+(async () => {
+  const container = document.getElementById("tiles");
+  for (const t of TILES) {
+    const el = document.createElement("div");
+    el.style.cssText = "background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px";
+    el.innerHTML = `<div style="font-size:14px;color:#4B5563">${t.label}</div><div style="font:500 40px 'IBM Plex Mono',monospace;margin:8px 0" class="v">—</div><div style="font-size:13px;color:#4B5563" class="s">A carregar…</div>`;
+    container.appendChild(el);
+    try {
+      const data = await api.observacoes(t.id);
+      const last = data.observacoes[data.observacoes.length - 1];
+      el.querySelector(".v").textContent = `${fmt(last.valor, 2)} ${t.unidade}`.trim();
+      el.querySelector(".s").textContent = `${last.periodo} · ${t.fonte}`;
+    } catch (e) { el.querySelector(".s").textContent = "Erro: " + e.message; }
+  }
+})();
+</script>
+</body>
+</html>

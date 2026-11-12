@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Todas as séries · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.serie{display:flex;gap:16px;align-items:center;padding:14px 16px;border-bottom:1px solid #E3E6EA;transition:background .12s;cursor:pointer}
+.serie:hover{background:#F3F5F7}
+.serie:last-child{border-bottom:none}
+.tag{font:600 11px 'IBM Plex Sans',sans-serif;padding:3px 8px;border-radius:999px;background:#E5E8EC;color:#4B5563}
+@media (max-width:720px){.serie code,.serie .tag{display:none}.serie>div{min-width:0!important}}
+input[type=search]{font:400 16px 'IBM Plex Sans',sans-serif;padding:10px 14px;border:1px solid #CBD2D9;border-radius:8px;min-height:44px;background:#fff;width:100%;max-width:480px;box-sizing:border-box}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div><h1 style="margin:0 0 6px;font-size:36px">Todas as séries</h1>
+<p style="margin:0;color:#4B5563;max-width:720px">Catálogo completo. Clica numa série para ver a ficha, os dados e a citação. Veem-se <span id="count" style="font-weight:600;color:#14274E">—</span> séries em <span id="fcount" style="font-weight:600;color:#14274E">—</span> fontes.</p></div>
+
+<input type="search" id="q" placeholder="Procurar por nome, código ou fonte…" aria-label="Procurar série">
+<div id="resultado" aria-live="polite" style="font-size:14px;color:#4B5563"></div>
+
+<section id="lista" style="display:flex;flex-direction:column;gap:20px"></section>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+
+<script type="module">
+import { api, sem } from "/static/app.js?v=7";
+
+let TODAS = [];
+
+(async () => {
+  const [series, fontes] = await Promise.all([api.series(), api.fontes()]);
+  TODAS = series;
+  const fonteMap = Object.fromEntries(fontes.map(f => [f.id, f]));
+  document.getElementById("count").textContent = series.length;
+  document.getElementById("fcount").textContent = fontes.length;
+  const campo = document.getElementById("q");
+  const filtrar = () => {
+    const termos = sem(campo.value).split(/\s+/).filter(Boolean);
+    const filtradas = TODAS.filter(s => { const alvo = sem(`${s.id} ${s.nome} ${s.fonte}`); return termos.every(x => alvo.includes(x)); });
+    render(filtradas, fonteMap, termos.length > 0);
+    document.getElementById("resultado").textContent = termos.length ? `${filtradas.length} resultado${filtradas.length === 1 ? "" : "s"} para "${campo.value.trim()}".` : "";
+  };
+  campo.value = new URLSearchParams(location.search).get("q") || "";
+  campo.addEventListener("input", filtrar);
+  filtrar();
+})();
+
+function render(series, fonteMap, pesquisa = false) {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  if (!series.length) {
+    lista.innerHTML = `<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">Sem resultados. Experimenta outra palavra ou abre o <a href="/orcamento.html" style="color:#B80F2D;font-weight:600">Desmontador do OGE</a> e o <a href="/pdfs.html" style="color:#B80F2D;font-weight:600">catálogo de documentos</a>.</div>`;
+    return;
+  }
+  const porFonte = new Map();
+  for (const s of series) {
+    if (!porFonte.has(s.fonte_id)) porFonte.set(s.fonte_id, []);
+    porFonte.get(s.fonte_id).push(s);
+  }
+  for (const [fid, grupo] of porFonte) {
+    const f = fonteMap[fid] || { nome: fid };
+    const bloco = document.createElement(fid === "minfin_cge" ? "details" : "div");
+    if (pesquisa) bloco.open = true;
+    bloco.style.cssText = "background:#fff;border:1px solid #E3E6EA;border-radius:12px;overflow:hidden";
+    const header = document.createElement(fid === "minfin_cge" ? "summary" : "div");
+    header.style.cssText = "cursor:pointer;padding:12px 16px;background:#F3F5F7;border-bottom:1px solid #E3E6EA;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px";
+    header.innerHTML = `<h2 style="display:inline;font-size:16px;margin:0">${f.nome}</h2> <span style="color:#4B5563;font-size:14px">· ${grupo.length} séries</span>`;
+    bloco.appendChild(header);
+    for (const s of grupo) {
+      const row = document.createElement("a");
+      row.href = `/serie/${s.id}`;
+      row.className = "serie";
+      row.innerHTML = `
+        <code style="font:500 13px 'IBM Plex Mono',monospace;color:#4B5563;min-width:200px;flex-shrink:0">${s.id}</code>
+        <div style="flex:1;min-width:260px">
+          <div style="font-weight:600">${s.nome}</div>
+          <div style="font-size:13px;color:#4B5563">${s.periodicidade} · ${s.unidade}</div>
+        </div>
+        <span class="tag">${s.periodicidade}</span>
+        <span style="color:#B80F2D;font-weight:600">Abrir →</span>`;
+      bloco.appendChild(row);
+    }
+    lista.appendChild(bloco);
+  }
+}
+</script>
+</body>
+</html>

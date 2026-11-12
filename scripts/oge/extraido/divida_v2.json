@@ -1,0 +1,82 @@
+{
+  "2011": {
+    "encargos_ou_divida": 452978310719.0,
+    "divida_interna": 316129568711.0,
+    "divida_externa": 136848742008.0
+  },
+  "2012": {
+    "encargos_ou_divida": 957987084298.0,
+    "divida_interna": 714099986998.0,
+    "divida_externa": 243887097300.0
+  },
+  "2013": {
+    "encargos_ou_divida": 716052215838.0,
+    "divida_interna": 499418089862.0,
+    "divida_externa": 216634125976.0
+  },
+  "2014": {
+    "encargos_ou_divida": 897289075566.0,
+    "divida_interna": 535548481825.0,
+    "divida_externa": 361740593741.0
+  },
+  "2015": {
+    "encargos_ou_divida": 1414004785688.0,
+    "divida_interna": 692658449659.0,
+    "divida_externa": 721346336029.0
+  },
+  "2016": {
+    "encargos_ou_divida": 2213374235652.0,
+    "divida_interna": 1013101020426.0,
+    "divida_externa": 1200273215226.0
+  },
+  "2017": {
+    "encargos_ou_divida": 2337977725551.0,
+    "divida_interna": 1090646917115.0,
+    "divida_externa": 1247330808436.0
+  },
+  "2018": {
+    "encargos_ou_divida": 5073042208771.0,
+    "divida_interna": 3161816599553.0,
+    "divida_externa": 1911225609218.0
+  },
+  "2019": {
+    "encargos_ou_divida": 5332477586275.0,
+    "divida_interna": 2389636187154.0,
+    "divida_externa": 2942841399121.0
+  },
+  "2020": {
+    "encargos_ou_divida": 7525218962293.0,
+    "divida_interna": 4629929210561.0,
+    "divida_externa": 2895289751732.0
+  },
+  "2021": {
+    "encargos_ou_divida": 7795663317562.0,
+    "divida_interna": 4052521262566.0,
+    "divida_externa": 3743142054996.0
+  },
+  "2022": {
+    "encargos_ou_divida": 9553257716255.0,
+    "divida_interna": 5581611593742.0,
+    "divida_externa": 3971646122513.0
+  },
+  "2023": {
+    "encargos_ou_divida": 9064127003861.0,
+    "divida_interna": 3994168808793.0,
+    "divida_externa": 5069958195068.0
+  },
+  "2024": {
+    "encargos_ou_divida": 14581225555991.0,
+    "divida_interna": 5939523298327.0,
+    "divida_externa": 8341268068430.0
+  },
+  "2025": {
+    "encargos_ou_divida": 17707911028681.0,
+    "divida_interna": 6521875728310.0,
+    "divida_externa": 10349706783076.0
+  },
+  "2026": {
+    "encargos_ou_divida": 15496151548343.0,
+    "divida_interna": 6474928584676.0,
+    "divida_externa": 8769046545263.0
+  }
+}

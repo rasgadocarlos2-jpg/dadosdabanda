@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogo MINFIN — OGE 2010-2026 · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.chip{font:600 13px 'IBM Plex Sans',sans-serif;border:1px solid #CBD2D9;background:#fff;color:#14274E;padding:6px 14px;border-radius:999px;cursor:pointer}
+.chip.on{background:#14274E;border-color:#14274E;color:#fff}
+.chip:hover:not(.on){border-color:#B80F2D;color:#B80F2D}
+input[type="search"]{font:400 15px 'IBM Plex Sans',sans-serif;padding:10px 14px;border:1px solid #CBD2D9;border-radius:8px;width:100%;box-sizing:border-box}
+.card{background:#fff;border:1px solid #E3E6EA;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:border-color .15s}
+.card:hover{border-color:#B80F2D}
+.card .icon{width:36px;height:44px;flex-shrink:0;background:#FDEEF1;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#B80F2D;font:700 11px 'IBM Plex Mono',monospace}
+.card .nome{font-weight:500;font-size:15px;line-height:1.3;color:#14274E;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.card .meta{font-size:12px;color:#4B5563;margin-top:2px}
+.card .ano{font:600 14px 'IBM Plex Mono',monospace;color:#4B5563;padding:4px 10px;background:#F3F5F7;border-radius:6px;flex-shrink:0}
+.catbadge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin-right:6px;font-weight:600}
+.cat-lei{background:#DBEAFE;color:#1E40AF}
+.cat-fundamentacao{background:#FDF0D2;color:#7A4B00}
+.cat-receita{background:#DCFCE7;color:#166534}
+.cat-despesa{background:#FDE2E7;color:#8C1226}
+.cat-estrategia{background:#E0E7FF;color:#3730A3}
+.cat-reoge{background:#FEF3C7;color:#7A4B00}
+.cat-cge{background:#F5E5FF;color:#5B21B6}
+.cat-outro{background:#F3F5F7;color:#4B5563}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div>
+  <h1 style="margin:0 0 6px;font-size:36px">Catálogo MINFIN</h1>
+  <div style="font-size:15px;color:#4B5563">Catálogo com <strong id="total-n">331</strong> PDFs oficiais do MINFIN, recolhidos em Novembro de 2026: OGE aprovado (2010-2026), Relatórios Trimestrais de Execução (REOGE, 2021-2026) e Conta Geral do Estado (CGE, 2014-2025) — propostas de lei, relatórios de fundamentação, resumos de receita e despesa por natureza, função, local e programa. Hospedados pelo <a href="https://www.minfin.gov.ao/oge/oge-passados" target="_blank" rel="noopener" style="color:#B80F2D;font-weight:600">MINFIN</a>, aqui com pesquisa.</div>
+</div>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+  <input type="search" id="q" aria-label="Procurar documento" placeholder="Procurar por nome do documento…" autocomplete="off">
+  <div style="display:flex;gap:8px;flex-wrap:wrap" id="anos"></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap" id="cats"></div>
+</section>
+
+<div id="contagem" aria-live="polite" style="font-size:13px;color:#4B5563"></div>
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px" id="lista"></section>
+<div id="vazio" style="display:none;padding:40px;text-align:center;color:#4B5563;font-size:15px">Nenhum PDF encontrado para esta combinação.</div>
+
+<div style="background:#FDF0D2;border:1px solid #7A4B00;color:#7A4B00;border-radius:12px;padding:12px 16px;font-size:14px"><strong>Como foi feito:</strong> O MINFIN publica tudo em <a href="https://www.minfin.gov.ao/oge/oge-passados" target="_blank" rel="noopener" style="text-decoration:underline">minfin.gov.ao/oge/oge-passados</a> mas a página carrega os links via JavaScript, o que torna difícil procurar. Aqui o catálogo está estático, com pesquisa e filtros, e os downloads são diretos do CMS do MINFIN (não guardamos cópias).</div>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+
+<script>
+const CATS = { lei: "Lei", fundamentacao: "Fundamentação", receita: "Receita", despesa: "Despesa", estrategia: "Estratégia Fiscal", reoge: "REOGE (execução trimestral)", cge: "CGE (Conta Geral)", outro: "Outro" };
+let dados = [], anoSel = null, catSel = null, qSel = [];
+const sem = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+async function carregar() {
+  const r = await fetch("/static/minfin-pdfs.json");
+  const d = await r.json();
+  dados = d.pdfs;
+  document.getElementById("total-n").textContent = d.total;
+
+  const anos = [...new Set(dados.map(p => p.ano))].sort((a,b) => b-a);
+  const anosEl = document.getElementById("anos");
+  anosEl.innerHTML = `<button class="chip on" data-ano="">Todos</button>` +
+    anos.map(a => `<button class="chip" data-ano="${a}">${a}</button>`).join("");
+  anosEl.addEventListener("click", e => {
+    if (!e.target.dataset.ano !== undefined && e.target.matches("button")) {
+      anoSel = e.target.dataset.ano || null;
+      [...anosEl.children].forEach(b => { b.classList.toggle("on", b === e.target); b.setAttribute("aria-pressed", b === e.target); });
+      render();
+    }
+  });
+
+  const catsEl = document.getElementById("cats");
+  catsEl.innerHTML = `<button class="chip on" data-cat="">Todas as categorias</button>` +
+    Object.entries(CATS).map(([k,v]) => `<button class="chip" data-cat="${k}">${v}</button>`).join("");
+  catsEl.addEventListener("click", e => {
+    if (e.target.matches("button")) {
+      catSel = e.target.dataset.cat || null;
+      [...catsEl.children].forEach(b => { b.classList.toggle("on", b === e.target); b.setAttribute("aria-pressed", b === e.target); });
+      render();
+    }
+  });
+
+  document.getElementById("q").addEventListener("input", e => {
+    qSel = sem(e.target.value).split(/\s+/).filter(Boolean);
+    render();
+  });
+
+  render();
+}
+
+function render() {
+  const filtrados = dados.filter(p =>
+    (!anoSel || p.ano == anoSel) &&
+    (!catSel || p.cat === catSel) &&
+    (!qSel.length || qSel.every(x => sem(`${p.nome} ${p.ano} ${CATS[p.cat]}`).includes(x)))
+  );
+  const lista = document.getElementById("lista");
+  document.getElementById("contagem").textContent = `${filtrados.length} ${filtrados.length === 1 ? 'resultado' : 'resultados'}`;
+  document.getElementById("vazio").style.display = filtrados.length ? "none" : "block";
+  lista.innerHTML = filtrados.map(p => `
+    <a class="card" href="${p.url}" target="_blank" rel="noopener">
+      <div class="icon">PDF</div>
+      <div style="flex:1;min-width:0">
+        <div class="nome">${p.nome.replace(/\.pdf$/i, '')}</div>
+        <div class="meta"><span class="catbadge cat-${p.cat}">${CATS[p.cat]}</span></div>
+      </div>
+      <div class="ano">${p.ano}</div>
+    </a>
+  `).join("");
+}
+
+carregar();
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel macroeconómico · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.btn[aria-pressed="true"]{background:#14274E;color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.hero-card{background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:16px 18px;cursor:pointer;transition:transform .12s,border-color .12s;display:flex;flex-direction:column;gap:4px;min-height:140px}
+.hero-card:hover{border-color:#B80F2D;transform:translateY(-2px)}
+.hero-card .label{font-size:13px;color:#4B5563;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.hero-card .val{font:500 28px 'IBM Plex Mono',monospace;margin-top:2px}
+.hero-card .meta{font-size:12px;color:#4B5563;margin-top:auto}
+.hero-card svg{width:100%;height:52px}
+</style>
+</head>
+<body>
+<div style="min-height:820px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px">
+<h1 style="margin:0;font-size:36px">Painel macroeconómico</h1>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<a href="/regional.html" style="font-weight:600;color:#B80F2D">Por província →</a>
+<a href="/comparar.html" style="font-weight:600;color:#B80F2D">Comparar →</a>
+<a href="/series.html" style="font-weight:600;color:#B80F2D">Ver todas →</a>
+</div>
+</div>
+
+<!-- HERO: 4 mini-cards clicáveis -->
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px" id="hero"></section>
+
+<!-- Tabs reduzidas -->
+<div style="display:flex;flex-direction:column;gap:8px" id="tabs-wrap">
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="font-size:12px;font-weight:600;color:#4B5563;text-transform:uppercase;letter-spacing:0.04em;margin-right:4px;min-width:80px">Economia</span>
+<button class="btn" data-id="ine_ipcn_variacao_mensal" aria-pressed="true">Inflação</button>
+<button class="btn" data-id="bna_cambio_usd">Câmbio USD</button>
+<button class="btn" data-id="wb_pib_crescimento">PIB</button>
+<button class="btn" data-id="bna_taxa_diretora">Taxa BNA</button>
+<button class="btn" data-id="imf_divida">Dívida pública</button>
+<button class="btn" data-id="oge_despesa_total">OGE anual</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="font-size:12px;font-weight:600;color:#4B5563;text-transform:uppercase;letter-spacing:0.04em;margin-right:4px;min-width:80px">Sociedade</span>
+<button class="btn" data-id="owid_esperanca_vida">Esperança de vida</button>
+<button class="btn" data-id="owid_mortalidade_infantil">Mortalidade infantil</button>
+<button class="btn" data-id="owid_populacao_urbana">População urbana</button>
+<button class="btn" data-id="owid_internet">Internet</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="font-size:12px;font-weight:600;color:#4B5563;text-transform:uppercase;letter-spacing:0.04em;margin-right:4px;min-width:80px">Trabalho</span>
+<button class="btn" data-id="ilo_desemprego_adultos">Desemprego (15+)</button>
+<button class="btn" data-id="ilo_desemprego_jovem">Desemprego jovem</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="font-size:12px;font-weight:600;color:#4B5563;text-transform:uppercase;letter-spacing:0.04em;margin-right:4px;min-width:80px">Ambiente</span>
+<button class="btn" data-id="owid_producao_petroleo">Petróleo</button>
+<button class="btn" data-id="owid_co2_per_capita">CO₂ per capita</button>
+</div>
+</div>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+<div><h2 style="font-size:17px;margin:0" id="t" aria-live="polite">A carregar…</h2><div style="font-size:14px;color:#4B5563" id="st"></div></div>
+</div>
+<svg id="chart" viewBox="0 0 1100 300" role="img" aria-label="Gráfico da série" style="width:100%;height:auto;max-height:320px"></svg>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid #E3E6EA;padding-top:16px">
+<a class="btn" id="csv" href="#" download>Descarregar CSV</a>
+<a class="btn" id="json" href="#" target="_blank">Descarregar JSON</a>
+<button class="btn" onclick="downloadHD()">Gráfico HD</button>
+<a class="btn" id="ficha" href="#">Ficha, tabela e citação</a>
+<a id="src" href="#" target="_blank" style="margin-left:auto;font-weight:600;color:#B80F2D" hidden>Ver fonte original →</a>
+</div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><h2 style="font-size:16px;margin:0 0 6px">Como ler este gráfico</h2><div style="font-size:14px;line-height:1.5;color:#4B5563" id="howto">Cada ponto é o valor publicado pela fonte para o período indicado.</div></div>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><h2 style="font-size:16px;margin:0 0 6px">Qualidade dos dados</h2><div style="font-size:14px;line-height:1.5;color:#4B5563">Cada série tem fonte, data de recolha e ficha própria. Metodologia pública em <a href="/metodologia.html" style="color:#B80F2D;font-weight:600">/metodologia</a>.</div></div>
+</section>
+
+<div style="padding-top:8px;border-top:1px solid #E3E6EA;color:#4B5563;font-size:14px">
+Procuras algo que não vês aqui? Temos <strong><span id="n-series">…</span> séries no total</strong>. <a href="/series.html" style="color:#B80F2D;font-weight:600">Ver todas →</a>
+</div>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</div>
+
+<script type="module">
+import { api, fmt, drawLineChart, drawSparkline } from "/static/app.js?v=7";
+
+const params = new URLSearchParams(location.search);
+let current = params.get("s") || "ine_ipcn_variacao_mensal";
+
+const HOWTO = {
+  ine_ipcn_variacao_mensal: "Variação mensal do IPCN. Fonte: INE Angola, Folha de Informação Rápida.",
+  bna_cambio_usd: "Média mensal da taxa de referência oficial do BNA, redistribuída pelo projeto open-source Frankfurter.",
+  wb_pib_crescimento: "Variação anual do PIB real a preços constantes. Fonte: Banco Mundial.",
+  bna_taxa_diretora: "Taxa de política monetária definida pelo Comité de Política Monetária do BNA.",
+  imf_divida: "Dívida pública bruta em % do PIB. Projeções do FMI (WEO) para anos futuros.",
+  oge_despesa_total: "Despesa total aprovada no Orçamento Geral do Estado. Fonte: Lei do OGE, MINFIN.",
+  owid_esperanca_vida: "Esperança de vida à nascença. Fonte original: UN WPP via Our World in Data.",
+  owid_mortalidade_infantil: "Probabilidade de uma criança morrer antes dos 5 anos (por 100 nados-vivos). Fonte: UN IGME via OWID.",
+  owid_populacao_urbana: "Percentagem da população total residente em áreas urbanas. Fonte: UN DESA via OWID.",
+  owid_internet: "Percentagem da população que usou Internet nos últimos 3 meses. Fonte: ITU via OWID.",
+  owid_producao_petroleo: "Produção anual de petróleo em TWh de energia primária. Fonte: Energy Institute via OWID.",
+  owid_co2_per_capita: "Emissões de CO₂ per capita (toneladas por pessoa, combustíveis fósseis e indústria). Fonte: Global Carbon Budget via OWID.",
+};
+
+// 4 mini-cards no hero — essenciais
+const HERO = [
+  { id: "ine_ipcn_variacao_mensal", label: "Inflação mensal", unidade: "%" },
+  { id: "bna_cambio_usd",           label: "Câmbio USD/AOA", unidade: "AOA" },
+  { id: "bna_taxa_diretora",        label: "Taxa BNA",       unidade: "%" },
+  { id: "wb_pib_crescimento",       label: "Crescimento PIB", unidade: "%" },
+];
+
+async function pintarHero() {
+  const hero = document.getElementById("hero");
+  for (const h of HERO) {
+    const card = document.createElement("a");
+    card.className = "hero-card";
+    card.href = `?s=${h.id}`;
+    card.innerHTML = `<div class="label">${h.label}</div>
+      <div class="val">—</div><div class="meta">a carregar…</div>
+      <svg aria-hidden="true"></svg>`;
+    hero.appendChild(card);
+    try {
+      const d = await api.observacoes(h.id);
+      const last = d.observacoes.at(-1);
+      card.querySelector(".val").textContent = `${fmt(last.valor, h.unidade === "AOA" ? 0 : 2)} ${h.unidade}`.trim();
+      card.querySelector(".meta").textContent = `${last.periodo} · ${d.fonte}`;
+      drawSparkline(card.querySelector("svg"), d.observacoes.slice(-24));
+    } catch (e) {
+      card.querySelector(".meta").textContent = "erro";
+    }
+  }
+}
+
+function injectarDatasetLD(data) {
+  try { document.querySelector("script[data-ld=dataset]")?.remove(); } catch(_){}
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": data.nome,
+    "description": `${data.nome}. Fonte: ${data.fonte}. Unidade: ${data.unidade}.`,
+    "url": location.href,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": { "@type": "Organization", "name": "Dados da Banda", "url": location.origin },
+    "variableMeasured": data.nome,
+    "spatialCoverage": { "@type": "Country", "name": "Angola" },
+    "distribution": [
+      { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": `${location.origin}/v1/series/${data.id}/observacoes` },
+      { "@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": `${location.origin}/v1/series/${data.id}/observacoes?formato=csv` },
+    ],
+  };
+  if (data.url_consulta) ld.isBasedOn = { "@type": "CreativeWork", "url": data.url_consulta };
+  const s = document.createElement("script");
+  s.type = "application/ld+json"; s.dataset.ld = "dataset";
+  s.textContent = JSON.stringify(ld);
+  document.head.appendChild(s);
+}
+
+async function select(id) {
+  current = id;
+  history.replaceState(null, "", "?s=" + id);
+  for (const b of document.querySelectorAll("#tabs-wrap .btn[data-id]")) {
+    b.setAttribute("aria-pressed", b.dataset.id === id ? "true" : "false");
+  }
+  const chartEl = document.getElementById("chart");
+  chartEl.setAttribute("aria-busy", "true");
+  document.getElementById("t").textContent = "A carregar…";
+  document.getElementById("st").textContent = "";
+  try {
+    const data = await api.observacoes(id);
+    const ultima = data.observacoes.at(-1);
+    const recolha = ultima ? new Date(ultima.recolhido_em).toLocaleDateString("pt-PT", {day:"2-digit",month:"short",year:"numeric"}) : "—";
+    const diasRecolha = ultima ? Math.floor((Date.now() - new Date(ultima.recolhido_em).getTime()) / 86400000) : null;
+    const isStale = diasRecolha != null && diasRecolha > 35;
+    const staleBadge = isStale ? ` · <span style="color:#7A4B00;background:#FDF0D2;padding:1px 6px;border-radius:999px;font-weight:600;font-size:12px">⚠ recolha há ${diasRecolha}d</span>` : "";
+    document.getElementById("t").textContent = `${data.nome}, ${data.observacoes[0]?.periodo}–${ultima?.periodo}`;
+    document.getElementById("st").innerHTML = `Fonte: ${data.fonte} · unidade: ${data.unidade} · última recolha: ${recolha}${staleBadge}`;
+    const src = document.getElementById("src");
+    if (data.url_consulta) { src.href = data.url_consulta; src.hidden = false; } else src.hidden = true;
+    drawLineChart(document.getElementById("chart"), data.observacoes, { unidade: data.unidade, previsaoDesde: id.startsWith("imf_") ? new Date().getFullYear() : null });
+    const ficha = document.getElementById("ficha"); ficha.href = `/serie/${id}`;
+    chartEl.setAttribute("aria-busy", "false");
+    document.getElementById("csv").href = `/v1/series/${id}/observacoes?formato=csv`;
+    document.getElementById("json").href = `/v1/series/${id}/observacoes`;
+    document.getElementById("howto").textContent = HOWTO[id] || "Cada ponto é o valor publicado pela fonte para o período indicado.";
+    injectarDatasetLD(data);
+  } catch (e) {
+    chartEl.setAttribute("aria-busy", "false");
+    document.getElementById("t").innerHTML = `Erro ao carregar a série. <button class="btn" style="margin-left:12px;padding:4px 12px;min-height:32px;font-size:13px" onclick="select('${id}')">Tentar outra vez</button>`;
+    document.getElementById("st").textContent = e.message;
+  }
+}
+
+window.select = select;
+window.downloadHD = () => {
+  const svg = document.getElementById("chart");
+  const data = new XMLSerializer().serializeToString(svg);
+  const blob = new Blob([`<?xml version="1.0"?>\n` + data], { type: "image/svg+xml" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `grafico-${current}.svg`;
+  a.click(); URL.revokeObjectURL(a.href);
+};
+
+for (const b of document.querySelectorAll("#tabs-wrap .btn[data-id]")) {
+  if (!b.disabled) b.addEventListener("click", (e) => { e.preventDefault(); select(b.dataset.id); });
+}
+
+// Hero cards: interceptar clique para não recarregar a página
+document.getElementById("hero").addEventListener("click", (e) => {
+  const card = e.target.closest(".hero-card");
+  if (!card) return;
+  e.preventDefault();
+  const url = new URL(card.href);
+  const s = url.searchParams.get("s");
+  if (s) select(s);
+});
+
+(async () => {
+  pintarHero();
+  select(current);
+  try {
+    const s = await api.series();
+    document.getElementById("n-series").textContent = s.length;
+  } catch(_) { document.getElementById("n-series").textContent = "90"; }
+})();
+</script>
+</body>
+</html>

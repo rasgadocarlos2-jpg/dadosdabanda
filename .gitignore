@@ -1,0 +1,54 @@
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.vercel/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Dados locais e brutos (não versionar)
+*.db
+*.sqlite
+bruto/
+*.xlsx
+*.zip
+*.log
+
+# Pastas antigas ou de outros projectos no mesmo directório
+web/
+dadosdabanda/
+popin-projeto/
+drivoo-*/
+dadosdabanda-design/
+
+# Deploy antigo (Fly.io), substituído pelo Vercel
+Dockerfile
+fly.toml
+.dockerignore
+DEPLOY.md
+
+# Manual de marca: imagens intermédias geradas pelo script
+marca/src/img/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Manual de identidade: uso interno, não publicar
+marca/*.pdf
+marca/src/manual.py
+marca/src/manual.html
+marca/src/mockups.py

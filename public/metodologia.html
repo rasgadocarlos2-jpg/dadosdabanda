@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metodologia e fontes · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.tag{font:600 11px 'IBM Plex Sans',sans-serif;padding:3px 8px;border-radius:999px}
+</style>
+<script src="/static/head-boost.js?v=6"></script>
+</head>
+<body>
+<div style="min-height:900px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:28px;width:100%;box-sizing:border-box">
+<div><h1 style="margin:0 0 8px;font-size:36px">Metodologia e fontes</h1><p style="margin:0;font-size:17px;color:#4B5563;max-width:720px">Como recolhemos, verificamos e corrigimos os dados. Cada série identifica a fonte de onde veio.</p></div>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font:500 14px 'IBM Plex Mono',monospace;color:#B80F2D">01</div><div style="font-weight:600;margin:6px 0">Recolha</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Usamos fontes oficiais e documentos públicos, sempre com atribuição. Cada valor guarda a data de recolha.</div></div>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font:500 14px 'IBM Plex Mono',monospace;color:#B80F2D">02</div><div style="font-weight:600;margin:6px 0">Extração</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Scripts por fonte, guardados no projecto. Os PDF têm codificação irregular, por isso cada extracção é conferida.</div></div>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font:500 14px 'IBM Plex Mono',monospace;color:#B80F2D">03</div><div style="font-weight:600;margin:6px 0">Verificação</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Somas de controlo: no OGE, as funções têm de somar o total publicado. Sem testes automáticos completos, por agora.</div></div>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font:500 14px 'IBM Plex Mono',monospace;color:#B80F2D">04</div><div style="font-weight:600;margin:6px 0">Publicação</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Cada série mostra a fonte e a data de recolha. Nem todas apontam ainda para o documento exacto.</div></div>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px 24px;overflow-x:auto">
+<div style="font-weight:600;margin-bottom:12px">Fontes utilizadas</div>
+<table style="width:100%;border-collapse:collapse;font-size:14px;min-width:620px">
+<thead><tr style="text-align:left;color:#4B5563"><th style="padding:8px 0;border-bottom:1px solid #E3E6EA">Fonte</th><th style="padding:8px 0;border-bottom:1px solid #E3E6EA">O que usamos</th><th style="padding:8px 0;border-bottom:1px solid #E3E6EA">Estado</th></tr></thead>
+<tbody id="fontes"><tr><td colspan="3" style="padding:10px 0;color:#4B5563">A carregar…</td></tr></tbody>
+</table></section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px 24px">
+<h2 style="font-size:18px;margin:0 0 8px">Como citar</h2>
+<p style="margin:0;font-size:15px;line-height:1.5;color:#4B5563">Indica sempre a fonte original e a data de consulta. Cada série tem o texto pronto na sua ficha. Formato: Dados da Banda. Nome da série. Fonte original: nome da fonte. Consultado em data. Endereço da ficha.</p>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font-weight:600;margin-bottom:6px">Uso de inteligência artificial</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Os resumos em linguagem clara serão gerados por IA e revistos. Não substituem o texto oficial nem constituem aconselhamento jurídico.</div></div>
+<div style="background:#fff;border:2px solid #B80F2D;border-radius:12px;padding:20px"><div style="font-weight:700;color:#B80F2D;margin-bottom:6px">Correcções</div><div style="font-size:14px;line-height:1.5;color:#4B5563;margin-bottom:10px">Os erros confirmados são corrigidos e publicados com data.</div><a href="/correcoes.html" style="font-weight:600">Ver registo de correcções →</a></div>
+<div style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px"><div style="font-weight:600;margin-bottom:6px">Dados pessoais</div><div style="font-size:14px;line-height:1.5;color:#4B5563">Guardamos apenas o e-mail que indica ao gerar chave. Detalhe em <a href="/privacidade.html" style="color:#B80F2D;font-weight:600">privacidade</a>.</div></div>
+</section>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</div>
+
+<script type="module">
+import { api } from "/static/app.js?v=7";
+const COMO = {
+  banco_mundial: "PIB, inflação, câmbio anual, população e indicadores sociais",
+  fmi: "PIB, inflação, dívida pública",
+  frankfurter_bna: "Câmbio USD/EUR/CNY/ZAR (mensal, referência BNA)",
+  our_world_in_data: "Saúde, população, energia e ambiente",
+  ilostat: "Desemprego",
+  who_gho: "Sem dados publicados de momento",
+  ine: "Inflação IPCN, nacional e por província",
+  bna: "Taxa directora",
+  minfin: "OGE aprovado",
+  minfin_fundamentacao: "Receita, despesa por função e dívida no OGE",
+  minfin_cge: "Execução do OGE (Conta Geral do Estado)",
+  lex_ao: "Legislação (ainda não publicada)",
+  imprensa_nacional: "Diário da República (ainda não publicado)",
+};
+const COR = { autorizada: ["#E3F4EA","#0F6B3E"], publica: ["#E5E8EC","#14274E"], pendente: ["#FDF0D2","#7A4B00"], negada: ["#FBE5E8","#8C1226"] };
+(async () => {
+  const tbody = document.getElementById("fontes");
+  tbody.innerHTML = "";
+  try {
+    const fontes = await api.fontes();
+    for (const f of fontes) {
+      const [bg, fg] = COR[f.estado_autorizacao] || COR.pendente;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td style="padding:10px 0;border-bottom:1px solid #E3E6EA">${f.nome}</td>
+        <td style="border-bottom:1px solid #E3E6EA;color:#4B5563">${COMO[f.id] || "—"}</td>
+        <td style="border-bottom:1px solid #E3E6EA"><span class="tag" style="background:${bg};color:${fg}">${f.estado_autorizacao === "publica" ? "DOCUMENTO PÚBLICO" : f.estado_autorizacao.toUpperCase()}</span></td>`;
+      tbody.appendChild(tr);
+    }
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="3" style="color:#8C1226">Erro: ${e.message}</td></tr>`;
+  }
+})();
+</script>
+</body>
+</html>

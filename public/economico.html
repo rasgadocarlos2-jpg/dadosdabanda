@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modo económico — Dados da Banda</title>
+<style>
+body { margin: 0; font-family: system-ui, -apple-system, sans-serif; color: #000; background: #fff; }
+a { color: #00408F; text-decoration: underline; }
+.page { min-height: 100vh; padding: 16px; display: flex; flex-direction: column; gap: 20px; font-size: 17px; line-height: 1.5; max-width: 820px; margin: 0 auto; }
+.banner { border: 2px solid #000; padding: 10px; }
+.brand { font-weight: 700; font-size: 20px; }
+nav.main { display: flex; flex-wrap: wrap; gap: 16px; }
+label.heavy { font-weight: 600; }
+input[type=text] { border: 2px solid #000; min-height: 48px; padding: 0 10px; font: 400 17px system-ui, sans-serif; background: #fff; color: #000; box-sizing: border-box; }
+button.primary { min-height: 48px; border: 2px solid #000; background: #000; color: #fff; font: 600 17px system-ui, sans-serif; cursor: pointer; }
+h2 { margin: 0; font-size: 20px; }
+table { border-collapse: collapse; width: 100%; font-size: 16px; }
+th { text-align: left; border-bottom: 2px solid #000; padding: 6px 4px 6px 0; }
+td { border-bottom: 1px solid #999; padding: 6px 4px 6px 0; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.footer { font-size: 14px; border-top: 1px solid #000; padding-top: 10px; }
+.pending { color: #666; font-style: italic; }
+</style>
+<script src="/static/head-boost.js?v=6"></script>
+</head>
+<body>
+<div class="page">
+  <div class="banner"><strong>Modo económico ligado.</strong> Sem imagens, gráficos nem animações, para poupar dados. <a href="/">Voltar ao modo normal</a></div>
+
+  <h1 class="brand" style="margin:0">Dados da Banda</h1>
+
+  <nav class="main">
+    <a href="/painel.html">Painel</a>
+    
+    <a href="/orcamento.html">Orçamento</a>
+    <a href="/api.html">API</a>
+    <a href="/metodologia.html">Metodologia</a>
+  </nav>
+
+  <form onsubmit="event.preventDefault(); location.href='/series.html?q='+encodeURIComponent(document.getElementById('q').value)">
+    <label class="heavy" for="q">Pesquisar dados</label>
+    <input id="q" type="text" style="width:100%;margin-top:8px">
+    <button class="primary" style="margin-top:8px;width:100%" type="submit">Pesquisar</button>
+  </form>
+
+  <h2>Indicadores</h2>
+  <table>
+    <thead><tr><th>Indicador</th><th>Valor</th><th>Fonte</th></tr></thead>
+    <tbody id="ind">
+      <tr><td colspan="3">A carregar…</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Documentos oficiais</h2>
+  <ul>
+    <li><a href="/pdfs.html">Catálogo MINFIN — 331 PDFs do OGE, REOGE e CGE (2010-2026)</a></li>
+    <li><a href="/orcamento.html">Desmontador do OGE</a></li>
+    <li><a href="/painel.html">Painel macroeconómico</a></li>
+  </ul>
+
+  <div class="footer" id="foot">Cada série identifica a sua fonte. · <a href="/metodologia.html">Metodologia</a> · <a href="/privacidade.html">Privacidade</a></div>
+</div>
+
+<script type="module">
+import { api, fmt } from "/static/app.js?v=7";
+
+const INDS = [
+  { id: "bna_cambio_usd",      nome: "Câmbio USD/AOA (mês mais recente)", unidade: "AOA" },
+  { id: "ine_ipcn_variacao_mensal", nome: "Inflação mensal (IPCN)", unidade: "%" },
+  { id: "wb_pib_crescimento",  nome: "Crescimento anual do PIB",           unidade: "%" },
+  { id: "bna_taxa_diretora",   nome: "Taxa directora BNA",                 unidade: "%" },
+  { id: "oge_despesa_total",   nome: "OGE total (ano corrente)",           unidade: "biliões Kz" },
+];
+
+(async () => {
+  const tbody = document.getElementById("ind");
+  tbody.innerHTML = "";
+  for (const ind of INDS) {
+    const tr = document.createElement("tr");
+    try {
+      const data = await api.observacoes(ind.id);
+      const last = data.observacoes[data.observacoes.length - 1];
+      tr.innerHTML = `<td>${ind.nome}, ${last.periodo}</td><td>${fmt(last.valor)} ${ind.unidade}</td><td>${data.fonte}</td>`;
+    } catch (e) {
+      tr.innerHTML = `<td>${ind.nome}</td><td colspan="2" class="pending">sem dados</td>`;
+    }
+    tbody.appendChild(tr);
+  }
+})();
+</script>
+</body>
+</html>

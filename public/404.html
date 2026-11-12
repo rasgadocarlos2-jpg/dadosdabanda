@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Página não encontrada · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+</style>
+<script src="/static/head-boost.js?v=6"></script>
+</head>
+<body>
+<div style="min-height:640px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:640px;margin:0 auto;padding:72px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div style="font:500 20px 'IBM Plex Mono',monospace;color:#B80F2D">Erro 404</div>
+<h1 style="margin:0;font-size:36px;line-height:1.15">Não encontrámos esta página.</h1>
+<p style="margin:0;font-size:17px;line-height:1.5;color:#4B5563">A ligação pode estar errada ou o documento pode ter sido movido. Procura pelo assunto ou escolhe um dos caminhos abaixo.</p>
+<form style="display:flex;gap:8px;background:#fff;border:1px solid #CBD2D9;border-radius:12px;padding:8px" onsubmit="event.preventDefault(); location.href='/series.html?q='+encodeURIComponent(document.getElementById('q').value)">
+<label for="q" style="position:absolute;left:-9999px">Pesquisar</label>
+<input id="q" placeholder="Pesquisar dados" style="flex:1;border:0;font:400 16px 'IBM Plex Sans',sans-serif;padding:0 12px;min-height:44px;outline:none">
+<button class="btn" style="background:#B80F2D;border-color:#B80F2D;color:#fff" type="submit">Pesquisar</button>
+</form>
+<div style="display:flex;gap:16px;flex-wrap:wrap;font-weight:600">
+<a href="/" style="color:#B80F2D">Página inicial</a>
+<a href="/legislacao.html" style="color:#B80F2D">Legislação</a>
+<a href="/painel.html" style="color:#B80F2D">Painel</a>
+<a href="/contacto.html" style="color:#B80F2D">Reportar uma ligação partida</a>
+</div>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</div>
+</body>
+</html>

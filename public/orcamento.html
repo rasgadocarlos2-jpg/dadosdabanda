@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desmontador do OGE · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+.tile{background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:2px}
+.tile .label{font-size:14px;color:#4B5563}
+.tile .val{font:500 27px 'IBM Plex Mono',monospace;margin:6px 0 2px}
+.tile .sub{font-size:13px;color:#4B5563}
+
+.year-picker{display:flex;gap:6px;flex-wrap:wrap;margin:0}
+.year-picker button{font:600 14px 'IBM Plex Sans',sans-serif;border:1px solid #CBD2D9;background:#fff;color:#14274E;padding:6px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.year-picker button.on{background:#14274E;border-color:#14274E;color:#fff}
+.year-picker button:hover:not(.on){border-color:#B80F2D;color:#B80F2D}
+
+.treemap{display:flex;flex-wrap:wrap;gap:4px;border-radius:12px;overflow:hidden;background:#F3F5F7}
+.block{padding:14px;color:#fff;cursor:pointer;display:flex;flex-direction:column;gap:2px;transition:transform .12s,filter .12s}
+.block:hover{transform:scale(1.015);filter:brightness(1.08);z-index:5}
+.block .nome{font-weight:600;font-size:15px;line-height:1.2}
+.block .val{font:500 13px 'IBM Plex Mono',monospace;margin-top:4px}
+.block .pct{font-size:12px;opacity:.9}
+.block.small .nome{font-size:12px}
+.block.small .val{font-size:11px}
+.block.small .pct{font-size:10px}
+
+.bars .row{margin-bottom:10px}
+.bars .row-head{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.bars .bar{height:14px;background:#E5E8EC;border-radius:7px;overflow:hidden}
+.bars .fill{height:100%;border-radius:7px}
+
+#legenda li:hover{background:#F3F5F7}
+@media (max-width:720px){
+  #donut-wrap{grid-template-columns:1fr !important}
+}
+</style>
+</head>
+<body>
+<div style="min-height:900px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:20px;width:100%;box-sizing:border-box">
+<div><h1 style="margin:0 0 6px;font-size:36px">Desmontador do OGE</h1>
+<div style="font-size:15px;color:#4B5563">Para onde vai o dinheiro público. Decomposição funcional do Orçamento Geral do Estado por setor, 2011-2026. Valores em biliões de kwanzas: 1 bilião é um milhão de milhões.</div></div>
+
+<div style="background:linear-gradient(90deg,#FEF3C7,#FDE68A);border:1px solid #D97706;color:#78350F;border-radius:12px;padding:14px 18px;font-size:14px;line-height:1.5">
+  <strong style="font-size:15px;color:#92400E">Novidade OGE 2026:</strong> O OGE desceu em valor nominal pela primeira vez desde 2015: 33,24 biliões de kwanzas, menos 4% do que em 2025. O serviço da dívida continua a ser a maior fatia (46,6% do orçamento).
+</div>
+
+<section style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div class="year-picker" id="years"></div>
+<div style="font-size:13px;color:#4B5563">Clica numa fatia para abrir a série no painel · <a href="/series.html" style="color:#B80F2D;font-weight:600">todas as séries</a></div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px" id="tiles"></section>
+
+<div id="destaque" style="background:#14274E;color:#fff;border-radius:12px;padding:20px 24px;font-size:17px;line-height:1.5;display:none"></div>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">
+<h2 style="margin:0 0 6px;font-size:20px">De onde vem o dinheiro</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:14px">Fontes de recurso previstas no OGE. O financiamento é dinheiro emprestado, dentro ou fora do país.</div>
+<div id="receita-split"></div>
+<div id="saldo-fiscal" style="margin-top:14px;font-size:14px;color:#4B5563"></div>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">
+<h2 style="margin:0 0 6px;font-size:22px">Para onde vai o OGE</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:16px">Cada fatia é proporcional ao peso no orçamento total. O serviço da dívida aparece a vermelho.</div>
+<div style="display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:28px;align-items:center" id="donut-wrap">
+  <div style="position:relative;max-width:340px;margin:0 auto">
+    <svg id="donut" viewBox="0 0 200 200" role="group" aria-label="Despesa do OGE por função" style="width:100%;height:auto;display:block"></svg>
+    <div id="donut-centro" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center">
+      <div style="font-size:12px;color:#4B5563" id="dc-nome">Total OGE</div>
+      <div style="font:500 19px 'IBM Plex Mono',monospace" id="dc-val">—</div>
+      <div style="font-size:12px;color:#4B5563" id="dc-pct"></div>
+    </div>
+  </div>
+  <a id="dc-abrir" hidden style="display:block;text-align:center;font-weight:600;color:#B80F2D;margin-top:10px"></a>
+  <ul id="legenda" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;font-size:14px"></ul>
+</div>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">
+<h2 style="margin:0 0 6px;font-size:20px">Evolução 2011 → 2026</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:12px">O OGE total multiplicou-se por 8× em 15 anos — efeito combinado de crescimento real, inflação e desvalorização do kwanza. <strong>Esconde o OGE Aprovado</strong> para ver as linhas sectoriais. Clica numa linha para isolar. Em 2015, 2016, 2019 e 2020 os valores são do OGE revisto.</div>
+<svg id="evolucao" viewBox="0 0 800 360" style="width:100%;height:auto;display:block"></svg>
+<div id="evo-leitura" aria-live="polite" style="font-size:14px;line-height:1.5;color:#14274E;margin-top:8px;min-height:21px"></div>
+<div id="evo-legenda" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:13px"></div>
+<div id="evo-notas" style="font-size:13px;line-height:1.5;color:#4B5563;margin-top:12px"></div>
+</section>
+
+<section id="sec-exec" style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px;display:none">
+<h2 style="margin:0 0 6px;font-size:20px">Aprovado vs executado</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:14px">Dotação inicial, despesa liquidada (obrigação assumida) e despesa paga até 31 de Dezembro, segundo a Conta Geral do Estado. O orçamento é alterado durante o ano, por isso o valor pode superar a dotação inicial.</div>
+<div id="exec-bars"></div>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">
+<h2 style="margin:0 0 6px;font-size:20px">Serviço da dívida em % do PIB</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:14px">Serviço da dívida previsto no OGE (juros e amortizações) face ao PIB a preços correntes do Banco Mundial. Mede o que há a pagar em cada ano, não o total da dívida. O MINFIN usa estimativas de PIB diferentes, e 2026 fica de fora porque o Banco Mundial ainda não tem esse ano.</div>
+<svg id="divida-pib" viewBox="0 0 800 220" style="width:100%;height:auto;display:block"></svg>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:24px">
+<h2 style="margin:0 0 6px;font-size:20px">Peso do petróleo nas receitas correntes</h2>
+<div style="color:#4B5563;font-size:14px;margin-bottom:14px">Impostos petrolíferos e partilha de produção previstos no OGE, em percentagem das receitas correntes. A soma de 2024 coincide com os 7 859 mil milhões Kz da Tabela 6 do MINFIN. Falta 2016, sem resumo por natureza no catálogo. Valores previstos, não cobrados.</div>
+<svg id="petroleo-decay" viewBox="0 0 800 220" style="width:100%;height:auto;display:block"></svg>
+</section>
+
+<section style="background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+  <div style="font-weight:600;font-size:16px;margin-bottom:4px">Descarregar todos os dados</div>
+  <div style="font-size:14px;color:#4B5563">16 anos de OGE em CSV: totais, setoriais, receita, dívida, PIB e execução.</div>
+</div>
+<button id="btn-csv" class="btn">Descarregar CSV</button>
+</section>
+
+<div style="background:#FDF0D2;border:1px solid #7A4B00;color:#7A4B00;border-radius:12px;padding:12px 16px;font-size:14px"><strong>Fontes:</strong> resumos do OGE de cada ano e Conta Geral do Estado (MINFIN); PIB em kwanzas do Banco Mundial. <a href="/pdfs.html" style="color:#7A4B00;font-weight:600">Ver os PDFs oficiais →</a></div>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</div>
+
+<script type="module">
+import { api, aoRedimensionar } from "/static/app.js?v=7";
+
+const ANOS = Array.from({length: 2026-2011+1}, (_, i) => String(2011+i));
+const SETORES = [
+  { id: "oge_educacao",         nome: "Educação",       cor: "#2563EB" },
+  { id: "oge_saude",            nome: "Saúde",          cor: "#0EA5E9" },
+  { id: "oge_protecao_social",  nome: "Proteção Social",cor: "#06B6D4" },
+  { id: "oge_habitacao",        nome: "Habitação",      cor: "#14B8A6" },
+  { id: "oge_defesa",           nome: "Defesa",         cor: "#64748B" },
+  { id: "oge_seguranca",        nome: "Segurança/Ordem",cor: "#475569" },
+  { id: "oge_setor_economico",  nome: "Setor Económico",cor: "#16A34A" },
+  { id: "oge_ambiente",         nome: "Ambiente",       cor: "#059669" },
+  { id: "oge_recreacao",        nome: "Recreação/Cultura", cor: "#CA8A04" },
+  { id: "oge_servicos_publicos",nome: "Serviços Públicos Gerais", cor: "#78716C" },
+  { id: "oge_encargos_financeiros", nome: "Encargos Financeiros (dívida)", cor: "#B80F2D" },
+];
+
+let anoSel = "2026";
+let dadosPorSerie = {};
+let execucao = null;
+const pc = (n, d = 1) => n.toFixed(d).replace(".", ",");
+const kz = (v, d = 2) => v >= 1 ? `${pc(v, d)} biliões` : `${pc(v * 1000, 0)} mil milhões`;
+
+(async () => {
+  // pré-carregar as séries
+  const extras = ["oge_despesa_total", "oge_divida_servico", "oge_divida_interna", "oge_divida_externa", "oge_encargos_financeiros",
+    "oge_receita_total", "oge_receita_correntes", "oge_receita_petroleo", "oge_saldo_fiscal",
+    "oge_fonte_tesouro", "oge_fonte_fin_interno", "oge_fonte_fin_externo", "oge_fonte_proprios", "oge_fonte_consignados", "oge_fonte_outros",
+    "oge_executado_total", "wb_pib_kz"];
+  execucao = await fetch("/static/oge-execucao.json").then(r => r.json()).catch(() => null);
+  const todos = [...extras, ...SETORES.map(s => s.id)];
+  try {
+    dadosPorSerie = await api.lote(todos);
+  } catch (e) {
+    document.getElementById("tiles").innerHTML = `<div class="tile" role="alert">Não foi possível carregar os dados. Recarrega a página dentro de um minuto.</div>`;
+    return;
+  }
+
+  // year picker
+  const yr = document.getElementById("years");
+  for (const a of ANOS) {
+    const b = document.createElement("button");
+    b.textContent = a; b.dataset.ano = a;
+    b.addEventListener("click", () => { anoSel = a; render(); });
+    yr.appendChild(b);
+  }
+  render();
+  const evo = document.getElementById("evolucao");
+  const repor = () => { render(); aoRedimensionar(evo, repor); };
+  aoRedimensionar(evo, repor);
+})();
+
+const largura = (svg, base) => Math.max(280, Math.round(svg.clientWidth || base));
+
+// oge_despesa_total e oge_divida_servico estão em TRILHÕES Kz (10^12);
+// as setoriais estão em BILIÕES Kz (10^9). Normalizamos tudo para trilhões.
+const EM_TRILHOES = new Set(["oge_despesa_total", "oge_divida_servico", "oge_executado_total"]);
+function valorAno(sid, ano) {
+  const d = dadosPorSerie[sid];
+  if (!d?.observacoes) return null;
+  const o = d.observacoes.find(o => o.periodo === ano);
+  if (!o) return null;
+  return EM_TRILHOES.has(sid) ? o.valor : o.valor / 1000;
+}
+
+function render() {
+  for (const b of document.querySelectorAll("#years button")) { b.classList.toggle("on", b.dataset.ano === anoSel); b.setAttribute("aria-pressed", b.dataset.ano === anoSel); }
+
+  const total = valorAno("oge_despesa_total", anoSel);
+  const divida = valorAno("oge_encargos_financeiros", anoSel) || valorAno("oge_divida_servico", anoSel);
+  const dividaPct = (divida && total) ? (divida / total * 100).toFixed(1) : "—";
+  const anoPrev = String(parseInt(anoSel) - 1);
+  const totalPrev = valorAno("oge_despesa_total", anoPrev);
+  const cresc = (total && totalPrev) ? (((total - totalPrev) / totalPrev) * 100).toFixed(1) : null;
+
+  const tiles = document.getElementById("tiles");
+  tiles.innerHTML = "";
+  const addT = (label, val, sub) => {
+    const el = document.createElement("div"); el.className = "tile";
+    el.innerHTML = `<div class="label">${label}</div><div class="val">${val}</div><div class="sub">${sub}</div>`;
+    tiles.appendChild(el);
+  };
+  const executado = valorAno("oge_executado_total", anoSel);
+  const subExec = executado ? `${kz(executado,2)} pagos (${pc(executado/total*100,0)}%), CGE` : "Lei do OGE, MINFIN";
+  const revisto = ["2015", "2016", "2019", "2020"].includes(anoSel);
+  addT(`OGE ${anoSel} — total ${revisto ? "revisto" : "aprovado"}`, total ? `${kz(total,2)} Kz` : "—", subExec);
+  // Dívida/PIB (mais útil que valor absoluto da dívida). valorAno devolve trilhões.
+  const pibTri = valorAno("wb_pib_kz", anoSel);
+  const dPct = (divida && pibTri) ? (divida / pibTri * 100).toFixed(0) : null;
+  const ogePct = (total && pibTri) ? (total / pibTri * 100).toFixed(0) : null;
+  addT(`OGE/PIB ${anoSel}`, ogePct ? `${ogePct}%` : "—", dPct ? `serviço da dívida: ${dPct}% do PIB` : "PIB deste ano ainda não publicado");
+  const educVal = valorAno("oge_educacao", anoSel);
+  addT(`Educação ${anoSel}`, educVal ? `${kz(educVal,2)} Kz` : "—", total ? `${pc(educVal/total*100)}% do OGE` : "—");
+  const saudeVal = valorAno("oge_saude", anoSel);
+  addT(`Saúde ${anoSel}`, saudeVal ? `${kz(saudeVal,2)} Kz` : "—", total ? `${pc(saudeVal/total*100)}% do OGE` : "—");
+
+  // Donut
+  const svg = document.getElementById("donut");
+  const legenda = document.getElementById("legenda");
+  svg.innerHTML = ""; legenda.innerHTML = "";
+  const soma = SETORES.map(s => ({ ...s, val: valorAno(s.id, anoSel) || 0 })).filter(s => s.val > 0).sort((a,b) => b.val - a.val);
+  const vTotal = soma.reduce((a,b) => a + b.val, 0);
+  const cx = 100, cy = 100, rOuter = 90, rInner = 58;
+  let a0 = -Math.PI / 2;
+  const paths = [];
+  let fatia = null;
+  document.getElementById("dc-abrir").hidden = true;
+  const limpar = () => {
+    if (fatia) return fatia._realcar();
+    paths.forEach(x => { x.style.opacity = "1"; });
+    resetCentro();
+  };
+  for (const s of soma) {
+    const pct = s.val / vTotal;
+    const a1 = a0 + pct * Math.PI * 2;
+    const grande = (a1 - a0) > Math.PI ? 1 : 0;
+    const x0o = cx + rOuter * Math.cos(a0), y0o = cy + rOuter * Math.sin(a0);
+    const x1o = cx + rOuter * Math.cos(a1), y1o = cy + rOuter * Math.sin(a1);
+    const x0i = cx + rInner * Math.cos(a1), y0i = cy + rInner * Math.sin(a1);
+    const x1i = cx + rInner * Math.cos(a0), y1i = cy + rInner * Math.sin(a0);
+    const d = `M ${x0o} ${y0o} A ${rOuter} ${rOuter} 0 ${grande} 1 ${x1o} ${y1o} L ${x0i} ${y0i} A ${rInner} ${rInner} 0 ${grande} 0 ${x1i} ${y1i} Z`;
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("d", d); p.setAttribute("fill", s.cor);
+    p.setAttribute("stroke", "#fff"); p.setAttribute("stroke-width", "1.5");
+    p.style.cursor = "pointer"; p.style.transition = "opacity .15s";
+    p.setAttribute("tabindex", "0");
+    p.setAttribute("role", "button");
+    p.setAttribute("aria-label", `${s.nome}: ${kz(s.val,2)} Kz, ${pc(pct*100)}% do OGE`);
+    const realcar = () => {
+      paths.forEach(x => { x.style.opacity = x === p ? "1" : "0.35"; });
+      document.getElementById("dc-nome").textContent = s.nome;
+      document.getElementById("dc-val").textContent = `${kz(s.val,2)}`;
+      document.getElementById("dc-pct").textContent = `${pc(pct*100)}% do OGE`;
+    };
+    p._realcar = realcar;
+    const escolher = () => {
+      fatia = fatia === p ? null : p;
+      const abrir = document.getElementById("dc-abrir");
+      abrir.hidden = !fatia;
+      abrir.href = `/painel.html?s=${s.id}`;
+      abrir.textContent = `Abrir série de ${s.nome} →`;
+      if (fatia) realcar(); else limpar();
+    };
+    p.addEventListener("mouseenter", realcar);
+    p.addEventListener("mouseleave", limpar);
+    p.addEventListener("focus", realcar);
+    p.addEventListener("blur", limpar);
+    p.addEventListener("click", escolher);
+    p.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); escolher(); } });
+    svg.appendChild(p); paths.push(p);
+    a0 = a1;
+
+    const li = document.createElement("li");
+    li.style.cssText = "display:flex;align-items:center;gap:10px;cursor:pointer;padding:4px 6px;border-radius:6px";
+    li.addEventListener("mouseenter", () => p.dispatchEvent(new Event("mouseenter")));
+    li.addEventListener("mouseleave", () => p.dispatchEvent(new Event("mouseleave")));
+    li.addEventListener("click", escolher);
+    li.innerHTML = `<span style="width:12px;height:12px;border-radius:3px;background:${s.cor};flex-shrink:0"></span>
+      <span style="flex:1">${s.nome}</span>
+      <span style="font:500 13px 'IBM Plex Mono',monospace;color:#4B5563">${kz(s.val,2)}</span>
+      <span style="font-size:12px;color:#4B5563;min-width:48px;text-align:right">${pc(pct*100)}%</span>`;
+    legenda.appendChild(li);
+  }
+  function resetCentro() {
+    document.getElementById("dc-nome").textContent = `OGE ${anoSel}`;
+    document.getElementById("dc-val").textContent = `${kz(vTotal,1)}`;
+    document.getElementById("dc-pct").textContent = "soma dos setores";
+  }
+  resetCentro();
+
+  // Destaque textual — preferir "Encargos Financeiros" (mais completo)
+  const dest = document.getElementById("destaque");
+  const encargos = valorAno("oge_encargos_financeiros", anoSel);
+  const divInt = valorAno("oge_divida_interna", anoSel);
+  const divExt = valorAno("oge_divida_externa", anoSel);
+  const servicoDivida = encargos || ((divInt || 0) + (divExt || 0));
+  const socialSoma = ["oge_educacao","oge_saude","oge_habitacao","oge_protecao_social"]
+    .map(id => valorAno(id, anoSel) || 0).reduce((a,b) => a+b, 0);
+  if (servicoDivida && socialSoma && total) {
+    const pctDiv = pc(servicoDivida/total*100);
+    const pctSoc = pc(socialSoma/total*100);
+    dest.style.display = "block";
+    dest.innerHTML = `Em ${anoSel}, o serviço da dívida previsto é de ${pctDiv}% do OGE. Educação, saúde, habitação e protecção social somam ${pctSoc}%.`;
+  } else { dest.style.display = "none"; }
+
+  desenharEvolucao();
+
+  desenharReceita();
+  desenharExecucao();
+  desenharDividaPib();
+  desenharPetroleoDecay();
+}
+
+let evoVisivel = null; // Set de ids visíveis, null = todos
+let evoIsolado = null; // id isolado (clique numa linha)
+const SERIES_EVO = [
+  { id: "oge_despesa_total",   nome: "OGE Aprovado", cor: "#14274E", tri: true, grossa: true },
+  { id: "oge_executado_total", nome: "Executado (CGE)", cor: "#16A34A", tri: true, grossa: true, tracejado: true },
+  { id: "oge_divida_externa",  nome: "Dívida Externa",cor: "#B80F2D", tri: false },
+  { id: "oge_divida_interna",  nome: "Dívida Interna",cor: "#8C1226", tri: false },
+  { id: "oge_educacao",        nome: "Educação",      cor: "#2563EB", tri: false },
+  { id: "oge_saude",           nome: "Saúde",         cor: "#0EA5E9", tri: false },
+  { id: "oge_defesa",          nome: "Defesa",        cor: "#64748B", tri: false },
+  { id: "oge_habitacao",       nome: "Habitação",     cor: "#14B8A6", tri: false },
+  { id: "oge_servicos_publicos", nome: "Serv. Públicos", cor: "#78716C", tri: false },
+  { id: "oge_setor_economico", nome: "Setor Económico", cor: "#16A34A", tri: false },
+  { id: "oge_protecao_social", nome: "Prot. Social",  cor: "#06B6D4", tri: false },
+];
+
+function desenharEvolucao() {
+  const svg = document.getElementById("evolucao");
+  const leg = document.getElementById("evo-legenda");
+  const pontos = SERIES_EVO.map(s => {
+    const d = dadosPorSerie[s.id]?.observacoes || [];
+    return { ...s, vals: d.map(o => ({ ano: +o.periodo, val: s.tri ? o.valor : o.valor / 1000 })).filter(p => p.ano >= 2011 && p.ano <= 2026).sort((a,b) => a.ano - b.ano) };
+  }).filter(s => s.vals.length >= 2);
+
+  if (evoVisivel === null) evoVisivel = new Set(pontos.map(s => s.id));
+
+  const ativos = pontos.filter(s => evoVisivel.has(s.id));
+  const W = largura(svg, 800), estreito = W < 760, H = W < 600 ? 300 : 360, pad = { l: W < 600 ? 34 : 44, r: 14, t: 40, b: 36 };
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Evolução do OGE e das principais funções, 2011 a 2026, em biliões de kwanzas. Toca no gráfico para ler os valores de um ano.");
+  const anos = Array.from({length: 2026-2011+1}, (_, i) => 2011+i);
+  const vmax = ativos.length ? Math.max(...ativos.flatMap(s => s.vals.map(p => p.val))) : 1;
+  const x = ano => pad.l + (ano - 2011) / (2026 - 2011) * (W - pad.l - pad.r);
+  const y = v => pad.t + (1 - v / vmax) * (H - pad.t - pad.b);
+
+  let g = `<g font-family="IBM Plex Sans" font-size="11" fill="#4B5563">`;
+  for (const a of anos) if (W < 600 ? (a - 2011) % 5 === 0 : (a % 2 === 1 || a === 2026)) {
+    g += `<text x="${x(a)}" y="${H - 14}" text-anchor="middle">${a}</text>`;
+  }
+  const steps = [0, vmax/4, vmax/2, 3*vmax/4, vmax];
+  for (const t of steps) {
+    g += `<line x1="${pad.l}" y1="${y(t)}" x2="${W-pad.r}" y2="${y(t)}" stroke="#E3E6EA" stroke-width="1"/>`;
+    const lbl = pc(t, t < 1 ? 2 : 1);
+    g += `<text x="${pad.l-6}" y="${y(t)+4}" text-anchor="end">${lbl}</text>`;
+  }
+  g += `</g>`;
+
+  // Anotações: eventos marcantes
+  const EVENTOS = [
+    { ano: 2016, label: "Crise petrolífera", desc: "Petróleo barato. Serviço da dívida sobe para 32% do OGE." },
+    { ano: 2020, label: "Pandemia", desc: "COVID + colapso do petróleo. Dívida sobe para 56% do OGE." },
+    { ano: 2022, label: "Petróleo alto", desc: "Guerra na Ucrânia. Receita fiscal acima do previsto." },
+    { ano: 2026, label: "1ª queda desde 2015", desc: "OGE 2026 fica 4% abaixo do de 2025 em valor nominal." },
+  ];
+  g += `<g font-family="IBM Plex Sans" font-size="10" fill="#92400E">`;
+  for (const e of EVENTOS) {
+    const xp = x(e.ano);
+    g += `<line x1="${xp}" y1="${pad.t}" x2="${xp}" y2="${H-pad.b}" stroke="#D97706" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>`;
+    const n = EVENTOS.indexOf(e) + 1;
+    const tx = Math.max(pad.l + 46, Math.min(W - 48, xp));
+    g += estreito
+      ? `<g transform="translate(${Math.min(W - 10, xp)},${pad.t - 12})"><circle r="9" fill="#FEF3C7" stroke="#D97706"/><text y="4" text-anchor="middle" font-size="11" font-weight="600">${n}</text></g>`
+      : `<g transform="translate(${tx},${pad.t - 6})"><rect x="-46" y="-12" width="92" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="0.5"/><text x="0" y="-2" text-anchor="middle" font-weight="600">${e.label}</text></g>`;
+  }
+  g += `</g>`;
+  document.getElementById("evo-notas").innerHTML = EVENTOS.map((e, i) => `<div>${estreito ? `<strong>${i + 1}.</strong> ` : ""}<strong>${e.ano}, ${e.label}:</strong> ${e.desc}</div>`).join("");
+
+  for (const s of pontos) {
+    const vis = evoVisivel.has(s.id);
+    const atenuado = evoIsolado && evoIsolado !== s.id;
+    const op = !vis ? 0 : (atenuado ? 0.15 : 1);
+    const d = s.vals.map((p, i) => `${i ? 'L' : 'M'} ${x(p.ano).toFixed(1)} ${y(p.val).toFixed(1)}`).join(" ");
+    g += `<path d="${d}" fill="none" stroke="${s.cor}" stroke-width="${s.grossa ? 3 : 2}" stroke-linecap="round" stroke-linejoin="round" ${s.tracejado ? 'stroke-dasharray="6 4"' : ''} opacity="${op}" style="cursor:pointer;pointer-events:stroke" data-id="${s.id}"/>`;
+    if (vis) for (const p of s.vals) {
+      g += `<circle cx="${x(p.ano)}" cy="${y(p.val)}" r="${s.grossa ? 3.5 : 2.5}" fill="${s.cor}" opacity="${atenuado ? 0.3 : 1}"><title>${s.nome} ${p.ano}: ${kz(p.val,2)} Kz</title></circle>`;
+    }
+  }
+  svg.innerHTML = g;
+
+  svg.onclick = (ev) => {
+    const r = svg.getBoundingClientRect();
+    const ano = Math.max(2011, Math.min(2026, Math.round(2011 + ((ev.clientX - r.left) / r.width * W - pad.l) / (W - pad.l - pad.r) * 15)));
+    const linhas = pontos.filter(s => evoVisivel.has(s.id)).map(s => [s.nome, s.vals.find(p => p.ano === ano)]).filter(([, p]) => p);
+    document.getElementById("evo-leitura").innerHTML = `<strong>${ano}:</strong> ` + linhas.map(([n, p]) => `${n} ${kz(p.val)}`).join(" · ");
+  };
+
+  // Clique na linha isola
+  svg.querySelectorAll("path[data-id]").forEach(p => {
+    p.addEventListener("click", () => {
+      const id = p.dataset.id;
+      evoIsolado = (evoIsolado === id) ? null : id;
+      desenharEvolucao();
+    });
+  });
+
+  // Legenda clicável: toggle visibilidade
+  leg.innerHTML = pontos.map(s => {
+    const vis = evoVisivel.has(s.id);
+    return `<button data-id="${s.id}" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;padding:8px 6px;border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:${vis ? '#14274E' : '#9CA3AF'};opacity:${vis ? 1 : 0.5}">
+      <span style="width:14px;height:3px;background:${s.cor};display:inline-block;border-radius:2px;${s.tracejado ? 'border-top:1px dashed ' + s.cor + ';background:transparent;height:0' : ''}"></span>
+      <span>${s.nome}</span>
+    </button>`;
+  }).join("") + `<button id="evo-reset" style="margin-left:auto;background:none;border:1px solid #CBD2D9;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:#4B5563">Mostrar todas</button>`;
+
+  leg.querySelectorAll("button[data-id]").forEach(b => {
+    b.addEventListener("click", () => {
+      const id = b.dataset.id;
+      if (evoVisivel.has(id)) evoVisivel.delete(id); else evoVisivel.add(id);
+      if (evoIsolado && !evoVisivel.has(evoIsolado)) evoIsolado = null;
+      desenharEvolucao();
+    });
+  });
+  leg.querySelector("#evo-reset")?.addEventListener("click", () => {
+    evoVisivel = new Set(pontos.map(s => s.id));
+    evoIsolado = null;
+    desenharEvolucao();
+  });
+}
+
+function desenharReceita() {
+  const FONTES = [
+    ["oge_fonte_tesouro", "Tesouro", "#14274E"], ["oge_fonte_fin_interno", "Financiamento interno", "#B80F2D"],
+    ["oge_fonte_fin_externo", "Financiamento externo", "#8C1226"], ["oge_fonte_proprios", "Recursos próprios", "#2563EB"],
+    ["oge_fonte_consignados", "Consignados", "#0EA5E9"], ["oge_fonte_outros", "Outras", "#9AA3AE"],
+  ].map(([id, nome, cor]) => ({ nome, cor, v: valorAno(id, anoSel) || 0 })).filter(f => f.v > 0);
+  const rec = valorAno("oge_receita_total", anoSel);
+  const rs = document.getElementById("receita-split");
+  if (!rec) { rs.innerHTML = ""; return; }
+  const fin = FONTES.filter(f => f.nome.startsWith("Financiamento")).reduce((a, f) => a + f.v, 0);
+  rs.innerHTML = `<div style="font-size:14px;color:#4B5563;margin-bottom:8px">Receita prevista: <strong style="color:#14274E;font-size:16px">${kz(rec,2)} Kz</strong>, dos quais ${pc(fin/rec*100)}% de financiamento.</div>
+    <div style="display:flex;height:32px;border-radius:8px;overflow:hidden">${FONTES.map(f => `<div title="${f.nome}" style="flex:${f.v};background:${f.cor}"></div>`).join("")}</div>
+    <ul style="list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px 20px;font-size:14px">${FONTES.map(f => `<li style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:3px;background:${f.cor};flex:none"></span><span style="flex:1">${f.nome}</span><span style="font-family:'IBM Plex Mono',monospace;color:#4B5563">${pc(f.v/rec*100)}%</span></li>`).join("")}</ul>`;
+  const pet = valorAno("oge_receita_petroleo", anoSel), cor = valorAno("oge_receita_correntes", anoSel);
+  const saldo = valorAno("oge_saldo_fiscal", anoSel);
+  let nota = pet && cor ? `Receita petrolífera prevista: ${kz(pet,2)} Kz, ${pc(pet/cor*100,0)}% das receitas correntes. ` : "";
+  if (saldo != null) nota += `Saldo global ${anoSel}: ${saldo >= 0 ? "superávit" : "défice"} de ${kz(Math.abs(saldo),2)} Kz (estimativa MINFIN).`;
+  document.getElementById("saldo-fiscal").textContent = nota;
+}
+
+function desenharExecucao() {
+  const sec = document.getElementById("sec-exec"), box = document.getElementById("exec-bars");
+  const dados = execucao?.anos?.[anoSel];
+  if (!dados) { sec.style.display = "none"; return; }
+  sec.style.display = "block";
+  const ord = ["total","divida","servicos_publicos","educacao","saude","habitacao","protecao_social","economico","defesa","seguranca"];
+  const maxTx = Math.max(1, ...ord.map(k => Math.max(dados[k].liq, dados[k].pago) / dados[k].orc));
+  box.innerHTML = ord.map(k => {
+    const d = dados[k], w = v => (v / d.orc / maxTx * 100).toFixed(1);
+    return `<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px"><span style="font-weight:600">${execucao.nomes[k]}</span><span style="font:600 14px 'IBM Plex Mono',monospace">${pc(d.pago/d.orc*100,0)}% pago</span></div>
+      <div style="position:relative;height:20px;background:#E5E8EC;border-radius:4px;overflow:hidden">
+        <div style="position:absolute;inset:0 auto 0 0;width:${w(d.orc)}%;background:#CBD2D9"></div>
+        <div style="position:absolute;inset:0 auto 0 0;width:${w(d.liq)}%;background:#8FA3C4"></div>
+        <div style="position:absolute;inset:0 auto 0 0;width:${w(d.pago)}%;background:#14274E"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:#4B5563;margin-top:3px"><span>Dotação inicial: ${kz(d.orc/1000,2)}</span><span>Liquidado: ${kz(d.liq/1000,2)}</span><span>Pago: ${kz(d.pago/1000,2)}</span></div>
+    </div>`;
+  }).join("") + `<div style="font-size:12px;color:#4B5563;margin-top:10px">Fonte: ${execucao.fonte}.</div>`;
+}
+
+function desenharDividaPib() {
+  const svg = document.getElementById("divida-pib");
+  const dados = [];
+  for (let a = 2011; a <= 2026; a++) {
+    const p = valorAno("wb_pib_kz", String(a)), e = valorAno("oge_encargos_financeiros", String(a));
+    if (p && e) dados.push({ ano: a, pct: e / p * 100 });
+  }
+  const W = largura(svg, 800), H = 220, estreito = W < 600, pad = { l: 38, r: 12, t: 24, b: 30 };
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Serviço da dívida em percentagem do PIB: " + dados.map(d => `${d.ano}, ${pc(d.pct)}%`).join("; "));
+  const vmax = Math.ceil(Math.max(...dados.map(d => d.pct)) / 5) * 5;
+  const x = a => pad.l + (a - 2011 + .5) / 16 * (W - pad.l - pad.r), bw = (W - pad.l - pad.r) / 16 * .65;
+  const y = v => pad.t + (1 - v / vmax) * (H - pad.t - pad.b);
+  let g = `<g font-family="IBM Plex Sans" font-size="11" fill="#4B5563">`;
+  for (let t = 0; t <= vmax; t += 5) g += `<line x1="${pad.l}" y1="${y(t)}" x2="${W-pad.r}" y2="${y(t)}" stroke="#E3E6EA"/><text x="${pad.l-6}" y="${y(t)+4}" text-anchor="end">${t}%</text>`;
+  for (const d of dados) {
+    g += `<rect x="${x(d.ano)-bw/2}" y="${y(d.pct)}" width="${bw}" height="${y(0)-y(d.pct)}" fill="#14274E"><title>${d.ano}: ${pc(d.pct)}% do PIB</title></rect>`;
+    g += `<text x="${x(d.ano)}" y="${H-12}" text-anchor="middle">${estreito ? String(d.ano).slice(2) : d.ano}</text>`;
+    if (!estreito || dados.indexOf(d) % 2 === 0) g += `<text x="${x(d.ano)}" y="${y(d.pct)-4}" text-anchor="middle" font-size="10" fill="#14274E" font-weight="600">${pc(d.pct,0)}%</text>`;
+  }
+  svg.innerHTML = g + `</g>`;
+}
+
+function desenharPetroleoDecay() {
+  const svg = document.getElementById("petroleo-decay");
+  const dados = [];
+  for (let a = 2011; a <= 2026; a++) {
+    const p = valorAno("oge_receita_petroleo", String(a)), c = valorAno("oge_receita_correntes", String(a));
+    if (p && c) dados.push({ ano: a, pct: p / c * 100 });
+  }
+  const W = largura(svg, 800), H = 220, estreito = W < 600, pad = { l: 38, r: 14, t: 24, b: 30 };
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Peso do petróleo nas receitas correntes: " + dados.map(d => `${d.ano}, ${pc(d.pct)}%`).join("; "));
+  const x = a => pad.l + (a - 2011) / 15 * (W - pad.l - pad.r), y = v => pad.t + (1 - v / 100) * (H - pad.t - pad.b);
+  let g = `<g font-family="IBM Plex Sans" font-size="11" fill="#4B5563">`;
+  for (const t of [0, 25, 50, 75, 100]) g += `<line x1="${pad.l}" y1="${y(t)}" x2="${W-pad.r}" y2="${y(t)}" stroke="#E3E6EA"/><text x="${pad.l-6}" y="${y(t)+4}" text-anchor="end">${t}%</text>`;
+  for (let a = 2011; a <= 2026; a++) g += `<text x="${x(a)}" y="${H-12}" text-anchor="middle">${String(a).slice(2)}</text>`;
+  const d = dados.map((p, i) => `${i ? "L" : "M"} ${x(p.ano).toFixed(1)} ${y(p.pct).toFixed(1)}`).join(" ");
+  g += `</g><path d="${d}" fill="none" stroke="#14274E" stroke-width="2.5"/>`;
+  for (const p of dados) g += `<circle cx="${x(p.ano)}" cy="${y(p.pct)}" r="3.5" fill="#14274E"><title>${p.ano}: ${pc(p.pct)}%</title></circle>${!estreito || dados.indexOf(p) % 2 === 0 ? `<text x="${x(p.ano)}" y="${y(p.pct)-8}" text-anchor="middle" font-size="10" fill="#14274E" font-weight="600" font-family="IBM Plex Sans">${pc(p.pct,0)}%</text>` : ""}`;
+  svg.innerHTML = g;
+}
+
+// CSV Download
+document.getElementById("btn-csv")?.addEventListener("click", () => {
+  const ids = ["oge_despesa_total","oge_receita_total","oge_receita_correntes","oge_receita_petroleo",
+    "oge_fonte_tesouro","oge_fonte_fin_interno","oge_fonte_fin_externo","oge_fonte_proprios","oge_fonte_consignados","oge_fonte_outros",
+    "wb_pib_kz","oge_encargos_financeiros","oge_divida_interna","oge_divida_externa",
+    "oge_educacao","oge_saude","oge_defesa","oge_seguranca","oge_habitacao","oge_protecao_social",
+    "oge_setor_economico","oge_servicos_publicos","oge_ambiente","oge_recreacao",
+    "oge_executado_total"];
+  const anos = Array.from({length: 2026-2011+1}, (_, i) => String(2011+i));
+  const hdr = ["ano", ...ids].join(",");
+  const linhas = anos.map(a => {
+    return [a, ...ids.map(id => {
+      const d = dadosPorSerie[id]?.observacoes || [];
+      const o = d.find(x => x.periodo === a);
+      return o ? o.valor : "";
+    })].join(",");
+  });
+  const csv = [hdr, ...linhas].join("\n");
+  const blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `oge_angola_2011_2026.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>

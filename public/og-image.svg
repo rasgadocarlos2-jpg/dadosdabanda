@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#F3F5F7"/>
+  <rect y="580" width="1200" height="50" fill="#111827"/>
+  <text x="80" y="200" font-family="'IBM Plex Sans',sans-serif" font-weight="700" font-size="56" fill="#111827">Dados da <tspan fill="#B80F2D">Banda</tspan></text>
+  <text x="80" y="310" font-family="'IBM Plex Sans',sans-serif" font-weight="700" font-size="68" fill="#111827">Os dados oficiais de Angola,</text>
+  <text x="80" y="390" font-family="'IBM Plex Sans',sans-serif" font-weight="700" font-size="68" fill="#111827">finalmente legíveis.</text>
+  <text x="80" y="465" font-family="'IBM Plex Sans',sans-serif" font-size="28" fill="#4B5563">Legislação, estatística e finanças públicas num só lugar.</text>
+  <text x="80" y="615" font-family="'IBM Plex Mono',monospace" font-size="18" fill="#fff">dadosdabanda.vercel.app</text>
+</svg>

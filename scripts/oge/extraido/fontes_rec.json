@@ -1,0 +1,857 @@
+{
+"2011_0": {
+"total": 4172.42,
+"linhas": [
+[
+"Total Geral:",
+4172.42,
+"100,00"
+],
+[
+"Doações",
+2.96,
+"0,07"
+],
+[
+"Financiamentos Externos",
+486.57,
+"11,66"
+],
+[
+"Financiamentos Internos",
+278.65,
+"6,68"
+],
+[
+"Recursos Consignados",
+0.66,
+"0,02"
+],
+[
+"Recursos Consignados - Local",
+206.92,
+"4,96"
+],
+[
+"Recursos Ordinários Do Tesouro",
+3085.17,
+"73,94"
+],
+[
+"Recursos Próprios",
+111.49,
+"2,67"
+]
+]
+},
+"2012_0": {
+"total": 4501.11,
+"linhas": [
+[
+"Total Geral:",
+4501.11,
+"100,00"
+],
+[
+"Doações",
+0.21,
+"0,00"
+],
+[
+"Financiamentos Externos",
+266.42,
+"5,92"
+],
+[
+"Financiamentos Internos",
+470.95,
+"10,46"
+],
+[
+"Recursos Consignados",
+0.46,
+"0,01"
+],
+[
+"Recursos Consignados - Local",
+450.42,
+"10,01"
+],
+[
+"Recursos Ordinários Do Tesouro",
+3182.08,
+"70,70"
+],
+[
+"Recursos Próprios",
+130.58,
+"2,90"
+]
+]
+},
+"2013_0": {
+"total": 6635.57,
+"linhas": [
+[
+"Total Geral:",
+6635.57,
+"100,00"
+],
+[
+"Doações",
+0.12,
+"0,00"
+],
+[
+"Financiamentos Externos",
+774.91,
+"11,68"
+],
+[
+"Financiamentos Internos",
+200.0,
+"3,01"
+],
+[
+"Recursos Consignados",
+0.82,
+"0,01"
+],
+[
+"Recursos Consignados - Local",
+334.23,
+"5,04"
+],
+[
+"Recursos Ordinários Do Tesouro",
+4392.69,
+"66,20"
+],
+[
+"Recursos Próprios",
+132.46,
+"2,00"
+],
+[
+"Reversão De Exercícios Anteriores",
+559.32,
+"8,43"
+],
+[
+"Títulos Do Tesouro Nacional",
+241.0,
+"3,63"
+]
+]
+},
+"2014_0": {
+"total": 7258.38,
+"linhas": [
+[
+"Total Geral:",
+7258.38,
+"100,00"
+],
+[
+"Financiamentos Externos",
+1035.85,
+"14,27"
+],
+[
+"Financiamentos Internos",
+670.4,
+"9,24"
+],
+[
+"Recursos Consignados - Diversos",
+212.75,
+"2,93"
+],
+[
+"Recursos Consignados - Local",
+210.13,
+"2,89"
+],
+[
+"Recursos Ordinários Do Tesouro",
+4311.56,
+"59,40"
+],
+[
+"Recursos Próprios",
+126.82,
+"1,75"
+],
+[
+"Reversão De Exercícios Anteriores",
+690.87,
+"9,52"
+]
+]
+},
+"2015_0": {
+"total": 7251.81,
+"linhas": [
+[
+"Total Geral:",
+7251.81,
+"100,00"
+],
+[
+"Bónus Da Exploração Do Petróleo",
+20.89,
+"0,29"
+],
+[
+"Financiamentos Externos",
+1410.97,
+"19,46"
+],
+[
+"Financiamentos Internos",
+1410.08,
+"19,44"
+],
+[
+"Recursos Consignados - Diversos",
+55.0,
+"0,76"
+],
+[
+"Recursos Consignados - Local",
+498.36,
+"6,87"
+],
+[
+"Recursos Ordinários Do Tesouro",
+3437.11,
+"47,40"
+],
+[
+"Recursos Próprios",
+175.37,
+"2,42"
+],
+[
+"Reversão De Exercícios Anteriores",
+244.02,
+"3,36"
+]
+]
+},
+"2015_1": {
+"total": 5454.02,
+"linhas": [
+[
+"Total Geral:",
+5454.02,
+"100,00"
+],
+[
+"Bónus Da Exploração Do Petróleo",
+20.89,
+"0,38"
+],
+[
+"Financiamentos Externos",
+1105.51,
+"20,27"
+],
+[
+"Financiamentos Internos",
+1410.08,
+"25,85"
+],
+[
+"Recursos Consignados - Diversos",
+55.0,
+"1,01"
+],
+[
+"Recursos Consignados - Local",
+485.71,
+"8,91"
+],
+[
+"Recursos Ordinários Do Tesouro",
+1957.43,
+"35,89"
+],
+[
+"Recursos Próprios",
+175.37,
+"3,22"
+],
+[
+"Reversão De Exercícios Anteriores",
+244.02,
+"4,47"
+]
+]
+},
+"2016_0": {
+"total": 6959.73,
+"linhas": [
+[
+"Total Geral:",
+6959.73,
+"100,00"
+],
+[
+"Financiamentos Externos",
+1384.21,
+"19,89"
+],
+[
+"Financiamentos Internos",
+2089.35,
+"30,02"
+],
+[
+"Recursos Consignados - Diversos",
+132.6,
+"1,91"
+],
+[
+"Recursos Consignados - Local",
+547.95,
+"7,87"
+],
+[
+"Recursos Ordinários Do Tesouro",
+2569.36,
+"36,92"
+],
+[
+"Recursos Próprios",
+236.25,
+"3,39"
+]
+]
+},
+"2017_0": {
+"total": 7390.05,
+"linhas": [
+[
+"Total Geral:",
+7390.05,
+"100,00"
+],
+[
+"Financiamentos Externos",
+1564.42,
+"21,17"
+],
+[
+"Financiamentos Internos",
+1660.17,
+"22,46"
+],
+[
+"Recursos Consignados - Diversos",
+132.6,
+"1,79"
+],
+[
+"Recursos Consignados - Local",
+538.81,
+"7,29"
+],
+[
+"Recursos Ordinários Do Tesouro",
+3225.82,
+"43,65"
+],
+[
+"Recursos Próprios",
+268.23,
+"3,63"
+]
+]
+},
+"2018_0": {
+"total": 9685.55,
+"linhas": [
+[
+"Total Geral:",
+9685.55,
+"100,00"
+],
+[
+"Financiamentos Externos",
+1959.04,
+"20,23"
+],
+[
+"Financiamentos Internos",
+2821.42,
+"29,13"
+],
+[
+"Recursos Consignados - Local",
+599.32,
+"6,19"
+],
+[
+"Recursos Ordinários Do Tesouro",
+4037.54,
+"41,69"
+],
+[
+"Recursos Próprios",
+268.23,
+"2,77"
+]
+]
+},
+"2019_0": {
+"total": 10400.87,
+"linhas": [
+[
+"Total Geral:",
+10400.87,
+"100,00"
+],
+[
+"Financiamentos Externos",
+2585.29,
+"24,86"
+],
+[
+"Financiamentos Internos",
+1827.9,
+"17,57"
+],
+[
+"Recursos Consignados - Local",
+886.28,
+"8,52"
+],
+[
+"Recursos Ordinários Do Tesouro",
+4708.49,
+"45,27"
+],
+[
+"Recursos Próprios",
+392.89,
+"3,78"
+]
+]
+},
+"2019_1": {
+"total": 11355.14,
+"linhas": [
+[
+"Total Geral:",
+11355.14,
+"100,00"
+],
+[
+"Financiamentos Externos",
+1995.68,
+"17,58"
+],
+[
+"Financiamentos Internos",
+1933.99,
+"17,03"
+],
+[
+"Recursos Consignados - Diversos",
+15.0,
+"0,13"
+],
+[
+"Recursos Consignados - Local",
+673.97,
+"5,94"
+],
+[
+"Recursos Ordinários Do Tesouro",
+6343.6,
+"55,87"
+],
+[
+"Recursos Próprios",
+392.89,
+"3,46"
+]
+]
+},
+"2020_0": {
+"total": 13455.31,
+"linhas": [
+[
+"Total Geral:",
+13455.31,
+"100,00"
+],
+[
+"Financiamentos Externos",
+2950.25,
+"21,93"
+],
+[
+"Financiamentos Internos",
+3139.88,
+"23,34"
+],
+[
+"Recursos Consignados - Diversos",
+115.87,
+"0,86"
+],
+[
+"Recursos Consignados - Local",
+594.91,
+"4,42"
+],
+[
+"Recursos Ordinários Do Tesouro",
+5762.51,
+"42,83"
+],
+[
+"Recursos Próprios",
+774.89,
+"5,76"
+],
+[
+"Reversão De Exercícios Anteriores",
+117.0,
+"0,87"
+]
+]
+},
+"2020_1": {
+"total": 15970.61,
+"linhas": [
+[
+"Total Geral:",
+15970.61,
+"100,00"
+],
+[
+"Financiamentos Externos",
+4863.68,
+"30,45"
+],
+[
+"Financiamentos Internos",
+2480.65,
+"15,53"
+],
+[
+"Recursos Consignados - Diversos",
+0.91,
+"0,01"
+],
+[
+"Recursos Consignados - Local",
+752.05,
+"4,71"
+],
+[
+"Recursos Ordinários Do Tesouro",
+7364.39,
+"46,11"
+],
+[
+"Recursos Próprios",
+508.93,
+"3,19"
+]
+]
+},
+"2021_0": {
+"total": 14785.2,
+"linhas": [
+[
+"Total Geral:",
+14785.2,
+"100,00"
+],
+[
+"Doações",
+0.11,
+"0,00"
+],
+[
+"Financiamentos Externos",
+3995.55,
+"27,02"
+],
+[
+"Financiamentos Internos",
+2190.96,
+"14,82"
+],
+[
+"Recursos Consignados - Diversos",
+46.75,
+"0,32"
+],
+[
+"Recursos Consignados - Local",
+751.83,
+"5,09"
+],
+[
+"Recursos Ordinários Do Tesouro",
+7267.89,
+"49,16"
+],
+[
+"Recursos Próprios",
+532.11,
+"3,60"
+]
+]
+},
+"2022_0": {
+"total": 18745.29,
+"linhas": [
+[
+"Total Geral:",
+18745.29,
+"100,00"
+],
+[
+"Financiamentos Externos",
+3833.45,
+"20,45"
+],
+[
+"Financiamentos Internos",
+3050.3,
+"16,27"
+],
+[
+"Recursos Consignados - Diversos",
+289.04,
+"1,54"
+],
+[
+"Recursos Consignados - Local",
+722.78,
+"3,86"
+],
+[
+"Recursos Ordinários Do Tesouro",
+10125.43,
+"54,02"
+],
+[
+"Recursos Próprios",
+724.28,
+"3,86"
+]
+]
+},
+"2023_0": {
+"total": 20104.21,
+"linhas": [
+[
+"Total Geral:",
+20104.21,
+"100,00"
+],
+[
+"Doações",
+6.91,
+"0,03"
+],
+[
+"Financiamentos Externos",
+3525.62,
+"17,54"
+],
+[
+"Financiamentos Internos",
+3096.96,
+"15,40"
+],
+[
+"Recursos Consignados - Diversos",
+310.94,
+"1,55"
+],
+[
+"Recursos Consignados - Local",
+824.14,
+"4,10"
+],
+[
+"Recursos Ordinários Do Tesouro",
+11552.15,
+"57,46"
+],
+[
+"Recursos Próprios",
+787.48,
+"3,92"
+]
+]
+},
+"2024_0": {
+"total": 24715.26,
+"linhas": [
+[
+"Total Geral:",
+24715.26,
+"100,00"
+],
+[
+"Doações",
+4.19,
+"0,02"
+],
+[
+"Financiamentos Externos",
+6171.18,
+"24,97"
+],
+[
+"Financiamentos Internos",
+3832.66,
+"15,51"
+],
+[
+"Recursos Consignados - Diversos",
+325.73,
+"1,32"
+],
+[
+"Recursos Consignados - Local",
+733.09,
+"2,97"
+],
+[
+"Recursos Ordinários Do Tesouro",
+12345.24,
+"49,95"
+],
+[
+"Recursos Próprios",
+1303.17,
+"5,27"
+]
+]
+},
+"2025_0": {
+"total": 34633.79,
+"linhas": [
+[
+"Total Geral:",
+34633.79,
+"100,00"
+],
+[
+"Financiamentos Externos",
+7090.02,
+"20,47"
+],
+[
+"Financiamentos Internos",
+7548.05,
+"21,79"
+],
+[
+"Recursos Consignados - Local",
+1050.24,
+"3,03"
+],
+[
+"Recursos Ordinários Do Tesouro",
+17423.59,
+"50,31"
+],
+[
+"Recursos Próprios",
+1521.89,
+"4,39"
+]
+]
+},
+"2026_0": {
+"total": 33240.84,
+"linhas": [
+[
+"Total Geral:",
+33240.84,
+"100,00"
+],
+[
+"Doações",
+6.77,
+"0,02"
+],
+[
+"Financiamentos Externos",
+7926.5,
+"23,85"
+],
+[
+"Financiamentos Internos",
+7108.83,
+"21,39"
+],
+[
+"Recursos Consignados - Local",
+1427.02,
+"4,29"
+],
+[
+"Recursos Ordinários Do Tesouro",
+14796.29,
+"44,51"
+],
+[
+"Recursos Próprios",
+1975.43,
+"5,94"
+]
+]
+},
+"2026_1": {
+"total": 33240.84,
+"linhas": [
+[
+"Total Geral:",
+33240.84,
+"100,00"
+],
+[
+"Doações",
+6.77,
+"0,02"
+],
+[
+"Financiamentos Externos",
+7926.5,
+"23,85"
+],
+[
+"Financiamentos Internos",
+7108.83,
+"21,39"
+],
+[
+"Recursos Consignados - Local",
+1427.02,
+"4,29"
+],
+[
+"Recursos Ordinários Do Tesouro",
+14796.29,
+"44,51"
+],
+[
+"Recursos Próprios",
+1975.43,
+"5,94"
+]
+]
+}
+}

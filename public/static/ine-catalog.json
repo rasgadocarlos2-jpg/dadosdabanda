@@ -1,0 +1,358 @@
+{
+  "categorias": {
+    "Outros": [
+      {
+        "id": 58519,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTk%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639290014025413485.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639290019236028494.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639264818246481968.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638884622620947132.xlsx"
+        ]
+      },
+      {
+        "id": 58518,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTg%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58517,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTc%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286932899870485.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58516,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTY%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639288607319460047.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58515,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTU%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639288603204330811.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58514,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTQ%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639288611571311795.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58513,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTM%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286835665470195.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58512,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTI%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286830336614993.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58510,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MTA%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286810066919434.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58509,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDk%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639288609220802769.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58508,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDg%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286393619129874.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286393619129874.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639142582364025210.xlsx"
+        ]
+      },
+      {
+        "id": 58507,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDc%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639283916096827644.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639283916096827644.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638884641317781059.xlsx"
+        ]
+      },
+      {
+        "id": 58506,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDY%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639280809709889931.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58505,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDU%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639280793859171650.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58504,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDQ%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639280167043027455.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58503,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDM%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639280176056218167.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58502,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDI%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639280158811670773.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286936436911744.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58501,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDE%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639276712408525415.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639276712408546787.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639172469180446600.xlsx"
+        ]
+      },
+      {
+        "id": 58500,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg1MDA%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639274072544458773.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639274072544472914.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639221219562477828.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639142581553843919.xlsx"
+        ]
+      },
+      {
+        "id": 58499,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTk%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639270552594302523.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639270558264469141.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639270558264489100.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639270558264489100.xlsx"
+        ]
+      },
+      {
+        "id": 58498,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTg%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639264035813409676.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639264035813443426.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639264818246481968.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639264818246481968.xlsx"
+        ]
+      },
+      {
+        "id": 58497,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTc%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639259741953945608.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639283916096827644.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638884641317781059.xlsx"
+        ]
+      },
+      {
+        "id": 58493,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTM%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639259742777277959.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286393619129874.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639142582364025210.xlsx"
+        ]
+      },
+      {
+        "id": 58492,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTI%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639252612404235925.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639252612404255839.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639221219562477828.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639142581553843919.xlsx"
+        ]
+      },
+      {
+        "id": 58491,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTE%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639251287380919521.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639251287381061504.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639172469180446600.xlsx"
+        ]
+      },
+      {
+        "id": 58490,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0OTA%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639251127342088298.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639251127342088298.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58489,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0ODk%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639286950033397413.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639251127342088298.pdf"
+        ],
+        "xlsx": []
+      },
+      {
+        "id": 58488,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTg0ODg%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639237247854411806.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639237247854411806.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639135933953837199.xlsx"
+        ]
+      },
+      {
+        "id": 57490,
+        "titulo": "INE-Instituto Nacional De Estatísticas",
+        "data": "27/10/2026",
+        "detalhe": "https://www.ine.gov.ao/publicacoes/detalhes/NTc0OTA%3D",
+        "pdfs": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639246745829576143.pdf",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639246745829617481.pdf"
+        ],
+        "xlsx": [
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639236617289956776.xlsx",
+          "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639236617289956776.xlsx"
+        ]
+      }
+    ]
+  },
+  "total": 29
+}

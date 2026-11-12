@@ -1,0 +1,26 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+bruto/
+*.db
+tests/
+dadosdabanda-design/
+dadosdabanda-design.zip
+schema.sql
+DEPLOY.md
+Dockerfile
+fly.toml
+.dockerignore
+
+# Pastas de outros projetos presentes no mesmo diretório
+drivoo-design/
+drivoo-mobile/
+dadosdabanda/
+*.zip
+*.xlsx
+*.log
+
+# Manual de marca (não publicar)
+marca/
+scripts/

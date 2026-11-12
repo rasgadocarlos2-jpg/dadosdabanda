@@ -1,0 +1,1 @@
+07_extrair_execucao.py le cge/cge_ANO_funcao.pdf: Anexo 11 da Conta Geral do Estado (ver catalogo).

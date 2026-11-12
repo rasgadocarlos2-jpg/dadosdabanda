@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sobre · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+h2{margin:28px 0 8px;font-size:22px}p{margin:0 0 10px;font-size:16px;line-height:1.6;color:#4B5563;max-width:720px}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:860px;margin:0 auto;padding:40px 24px;width:100%;box-sizing:border-box">
+<h1 style="font-size:36px;margin:0 0 10px">Sobre o Dados da Banda</h1>
+<p style="font-size:17px;color:#4B5563">Projeto independente de dados abertos sobre Angola. Agrega estatística, orçamento e finanças públicas num só lugar, com a fonte identificada em cada série.</p>
+
+<h2>Porquê este projeto</h2>
+<p>Em Angola, a informação pública existe mas está dispersa, enterrada em PDFs, perdida entre fontes que divergem umas das outras. Encontrar um número com confiança é trabalho de arqueologia. O objetivo é cortar esse trabalho ao meio: uma pergunta, uma resposta, uma ligação para o documento oficial.</p>
+
+<h2>Como é feito</h2>
+<p>Backend em Python e FastAPI. Base de dados PostgreSQL na Supabase. Site em HTML+JS alojado na Vercel. Recolha automática semanal de câmbios e indicadores do Banco Mundial; os restantes dados são actualizados manualmente. Cada observação guarda a data em que foi recolhida. Vê a <a href="/metodologia.html">metodologia</a> para o detalhe.</p>
+
+<h2>Quem está por trás</h2>
+<p>Projeto construído por Carlos Rasgado, inicialmente sem equipa formal. Informação e estado do contacto em <a href="/contacto.html">contacto</a>. Se te interessa contribuir — jornalismo de dados, revisão de legislação, parcerias institucionais — escreve.</p>
+
+<h2>Independência e financiamento</h2>
+<p>Projeto não comercial, sem financiamento público nem parceria com qualquer partido. Os custos atuais (alojamento e APIs) são baixos e cobertos pessoalmente. Quando o projeto crescer, consideramos abrir donativos públicos, newsletter paga, ou candidatura a bolsas de jornalismo de dados.</p>
+
+<p>As regras editoriais estão no <a href="/estatuto.html">estatuto</a>, e as correcções no <a href="/correcoes.html">registo público</a>.</p>
+
+<h2>Licença</h2>
+<p>O código-fonte ainda não é público. Os dados herdam a licença de cada fonte original: Our World in Data usa CC BY 4.0, e os termos das restantes fontes estão a ser confirmados. Para legislação angolana (quando chegar), seguiremos os termos impostos por lex.ao e Imprensa Nacional.</p>
+
+<h2>Estado atual</h2>
+<p>Versão <strong>0.9</strong> — ~70% do v1 planeado. Aguardamos resposta aos pedidos de autorização ao INE, ao BNA e à lex.ao; o pedido à Imprensa Nacional ainda está por enviar. O site está público e usa dados do MINFIN, INE, BNA, Banco Mundial, FMI, OIT e Our World in Data.</p>
+
+<p style="margin-top:32px"><a href="/" class="btn" style="display:inline-block;text-decoration:none">← Voltar ao início</a></p>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+</body>
+</html>

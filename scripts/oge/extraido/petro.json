@@ -1,0 +1,163 @@
+{
+"2011": {
+"total": 4172.42,
+"correntes": 3401.18,
+"petroleo": 2559.88,
+"comp": {
+"rend": 560.6,
+"trans": 182.1,
+"prod": 166.9,
+"part": 1650.3
+}
+},
+"2012": {
+"total": 4501.11,
+"correntes": 3759.76,
+"petroleo": 2559.92,
+"comp": {
+"rend": 506.6,
+"trans": 70.1,
+"prod": 194.4,
+"part": 1788.8
+}
+},
+"2013": {
+"total": 6635.57,
+"correntes": 4858.48,
+"petroleo": 3281.75,
+"comp": {
+"rend": 574.0,
+"trans": 128.7,
+"prod": 188.2,
+"part": 2390.8
+}
+},
+"2014": {
+"total": 7258.38,
+"correntes": 4859.62,
+"petroleo": 3313.08,
+"comp": {
+"rend": 528.3,
+"trans": 89.9,
+"prod": 190.2,
+"part": 2504.6
+}
+},
+"2015": {
+"total": 5454.02,
+"correntes": 2692.03,
+"petroleo": 1039.2,
+"comp": {
+"rend": 140.1,
+"trans": 0.0,
+"prod": 99.0,
+"part": 800.1
+}
+},
+"2017": {
+"total": 7390.05,
+"correntes": 4163.74,
+"petroleo": 1695.46,
+"comp": {
+"rend": 277.0,
+"prod": 201.9,
+"part": 1216.6
+}
+},
+"2018": {
+"total": 9685.55,
+"correntes": 4903.79,
+"petroleo": 2399.13,
+"comp": {
+"rend": 598.7,
+"prod": 262.2,
+"part": 1538.2
+}
+},
+"2019": {
+"total": 10400.87,
+"correntes": 5985.86,
+"petroleo": 3567.64,
+"comp": {
+"rend": 1038.8,
+"trans": 84.8,
+"prod": 382.8,
+"part": 2061.2
+}
+},
+"2020": {
+"total": 13455.31,
+"correntes": 6010.14,
+"petroleo": 2951.77,
+"comp": {
+"rend": 779.7,
+"trans": 44.4,
+"prod": 158.9,
+"part": 1968.8
+}
+},
+"2021": {
+"total": 14785.2,
+"correntes": 8104.86,
+"petroleo": 4059.22,
+"comp": {
+"rend": 865.2,
+"prod": 407.4,
+"part": 2786.7
+}
+},
+"2022": {
+"total": 18745.29,
+"correntes": 11637.4,
+"petroleo": 6118.01,
+"comp": {
+"rend": 1404.4,
+"trans": 178.0,
+"prod": 486.7,
+"part": 4048.9
+}
+},
+"2023": {
+"total": 20104.21,
+"correntes": 13456.39,
+"petroleo": 7195.64,
+"comp": {
+"rend": 1660.4,
+"trans": 523.9,
+"prod": 470.6,
+"part": 4540.7
+}
+},
+"2024": {
+"total": 24715.26,
+"correntes": 14686.63,
+"petroleo": 7859.15,
+"comp": {
+"rend": 1972.6,
+"trans": 289.8,
+"prod": 598.3,
+"part": 4998.5
+}
+},
+"2025": {
+"total": 34633.79,
+"correntes": 19832.34,
+"petroleo": 10852.29,
+"comp": {
+"rend": 2916.9,
+"trans": 4.5,
+"prod": 802.8,
+"part": 7128.1
+}
+},
+"2026": {
+"total": 33240.84,
+"correntes": 18179.39,
+"petroleo": 7463.54,
+"comp": {
+"rend": 1852.3,
+"prod": 459.0,
+"part": 5152.3
+}
+}
+}

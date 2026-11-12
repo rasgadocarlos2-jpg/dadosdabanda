@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inflação por província · Dados da Banda</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="/static/head-boost.js?v=6"></script>
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#14274E;background:#F3F5F7}
+a{color:#14274E;text-decoration:none}a:hover{color:#B80F2D}
+.btn{font:600 15px 'IBM Plex Sans',sans-serif;border:1px solid #14274E;background:#fff;color:#14274E;padding:10px 16px;border-radius:8px;min-height:44px;cursor:pointer}
+
+.wrap{background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
+
+.map-area{position:relative;background:linear-gradient(180deg,#F8F9FB 0%,#F3F5F7 100%);border-radius:8px;padding:10px;min-height:400px}
+#mapa{width:100%;height:auto;display:block;max-height:720px}
+#mapa path{stroke:#fff;stroke-width:0.8;cursor:pointer;transition:opacity .15s,stroke-width .15s,filter .15s}
+#mapa path:hover{stroke:#14274E;stroke-width:2;filter:brightness(1.05)}
+#mapa path.sel{stroke:#14274E;stroke-width:2.5;filter:brightness(1.05)}
+#mapa .label{pointer-events:none;font:600 10px 'IBM Plex Sans',sans-serif;fill:#14274E;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 3px #fff}
+#mapa .label-sm{pointer-events:none;font:500 9px 'IBM Plex Sans',sans-serif;fill:#4B5563;text-shadow:0 0 2px #fff,0 0 2px #fff}
+
+.tooltip{position:absolute;pointer-events:none;background:#14274E;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;z-index:10;opacity:0;transform:translate(-50%,calc(-100% - 10px));transition:opacity .1s;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.tooltip.on{opacity:.96}
+.tooltip strong{display:block;font-size:14px;margin-bottom:2px}
+.tooltip .v{font:500 13px 'IBM Plex Mono',monospace;color:#F3F4CF}
+
+.legend-row{margin-top:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:#4B5563}
+.legend-bar{display:flex;flex:1;min-width:160px;max-width:260px;height:12px;border-radius:6px;overflow:hidden}
+.legend-bar > span{flex:1}
+.legend-val{font:500 12px 'IBM Plex Mono',monospace;color:#14274E}
+
+.info h2{margin:0 0 6px;font-size:20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tag-nova{font:600 10px 'IBM Plex Sans',sans-serif;background:#FDF0D2;color:#7A4B00;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+.info .valor{font:500 44px 'IBM Plex Mono',monospace;color:#B80F2D;line-height:1.05;margin:10px 0 4px}
+.info .periodo{color:#4B5563;font-size:13px}
+.info .spark svg{width:100%;height:50px;margin-top:10px}
+
+.rank{margin-top:22px;max-height:320px;overflow-y:auto;padding-right:4px}
+.rank li{border-bottom:1px solid #F3F5F7;font-size:14px;list-style:none}.rank button{display:flex;justify-content:space-between;width:100%;padding:7px 0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.rank button:hover{color:#B80F2D}
+.rank li.sel{background:#F3F5F7;margin:0 -8px;padding:0 8px;border-radius:6px}.rank li.sel button{font-weight:600;color:#B80F2D}
+.rank .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+.notas{background:#FDF0D2;border:1px solid #7A4B00;color:#7A4B00;border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.5}
+
+.toolbar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.toolbar button{font:500 12px 'IBM Plex Sans',sans-serif;background:#fff;border:1px solid #E3E6EA;padding:5px 10px;border-radius:999px;cursor:pointer;color:#4B5563}
+.toolbar button:hover{border-color:#B80F2D;color:#B80F2D}
+.toolbar button.on{background:#14274E;color:#fff;border-color:#14274E}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #E3E6EA"><div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+<a href="/" class="ddb-logo" aria-label="Dados da Banda, página inicial">Dados da Banda</a>
+<nav style="display:flex;gap:24px;flex:1;flex-wrap:wrap;font-size:15px"><a href="/painel.html">Painel</a><a href="/orcamento.html">Orçamento</a><a href="/regional.html">Províncias</a><a href="/comparar.html">Comparar</a><a href="/pdfs.html">Documentos</a><a href="/api.html">API</a><a href="/metodologia.html">Metodologia</a></nav>
+</div></header>
+<main style="max-width:1200px;margin:0 auto;padding:40px 24px;display:flex;flex-direction:column;gap:16px;width:100%;box-sizing:border-box">
+<div><h1 style="margin:0 0 6px;font-size:36px">Inflação por província</h1>
+<p style="margin:0;color:#4B5563;max-width:720px">Variação mensal do IPCN em cada província. Clica no mapa ou no ranking. Fonte: INE Angola.</p></div>
+
+<div class="notas"><strong>Nota sobre as 21 províncias.</strong> A <a href="https://www.verangola.net/va/pt/082024/Politica/41162/Angola-oficialmente-com-21-províncias-Parlamento-aprova-divisão-administrativa-com-“chumbo”-da-UNITA.htm" target="_blank" style="color:#7A4B00;text-decoration:underline">Lei 14/24</a> criou <strong>Icolo e Bengo</strong> (de Luanda), <strong>Cuando</strong> (de Cuando Cubango) e <strong>Moxico Leste</strong> (de Moxico), mas o INE continua a publicar o IPCN nas 18 fronteiras antigas. O mapa reflete os dados tal como são publicados.</div>
+
+<section class="wrap">
+<div>
+<div class="toolbar">
+<button data-mode="mes" class="on">Variação mensal</button>
+<button data-mode="acum">Acumulada no ano</button>
+</div>
+<div class="map-area" id="map-area">
+<svg id="mapa" viewBox="0 0 800 900" role="img" aria-label="Mapa de Angola por província">
+<text x="400" y="450" text-anchor="middle" fill="#4B5563" font-size="18">A carregar mapa…</text>
+</svg>
+<div class="tooltip" id="tt"></div>
+</div>
+<div class="legend-row">
+<span class="legend-val" id="legmin">—</span>
+<div class="legend-bar" id="legbar"></div>
+<span class="legend-val" id="legmax">—</span>
+<span style="margin-left:auto">último período: <strong id="periodo-ref">—</strong></span>
+</div>
+</div>
+
+<aside class="info" id="info">
+<h2 id="prov-nome">Clica numa província</h2>
+<div class="valor" id="prov-valor">—</div>
+<div class="periodo" id="prov-periodo">Mapa colorido pela inflação mais recente.</div>
+<div class="spark"><svg aria-hidden="true"></svg></div>
+<a id="prov-link" href="#" style="display:inline-block;margin-top:14px;font-weight:600;color:#B80F2D" hidden>Abrir série completa →</a>
+
+<ol class="rank" id="rank"></ol>
+</aside>
+</section>
+
+<div style="padding-top:8px;color:#4B5563;font-size:13px">Fronteiras: <a href="https://www.geoboundaries.org" target="_blank" style="color:#B80F2D">geoBoundaries</a> (domínio público, U.S. Census Bureau, atualizadas 2023, antes da divisão em 21 províncias).</div>
+</main>
+<footer style="margin-top:48px;background:#14274E;color:#fff;padding:24px"><div style="max-width:1200px;margin:0 auto;display:flex;gap:12px 20px;flex-wrap:wrap;font-size:14px"><span style="flex:1 1 280px">Projeto independente de dados abertos. Cada série identifica a sua fonte.</span><a href="/sobre.html" style="color:#fff">Sobre</a><a href="/metodologia.html" style="color:#fff">Metodologia</a><a href="/estatuto.html" style="color:#fff">Estatuto</a><a href="/correcoes.html" style="color:#fff">Correcções</a><a href="/faq.html" style="color:#fff">FAQ</a><a href="/privacidade.html" style="color:#fff">Privacidade</a><a href="/contacto.html" style="color:#fff">Contacto</a><a href="/economico.html" style="color:#fff">Modo económico</a></div></footer>
+
+<script type="module">
+import { api, fmt, drawSparkline } from "/static/app.js?v=7";
+
+// gradiente verde→amarelo→laranja→vermelho (passagens cromáticas suaves)
+const GRADIENT = [
+  [0.00, [217, 237, 198]],
+  [0.25, [245, 234, 162]],
+  [0.50, [247, 185, 114]],
+  [0.75, [219, 103, 86]],
+  [1.00, [140, 18, 38]],
+];
+function cor(t) {
+  if (t == null || Number.isNaN(t)) return "#E3E6EA";
+  t = Math.max(0, Math.min(1, t));
+  for (let i = 1; i < GRADIENT.length; i++) {
+    const [t0, c0] = GRADIENT[i-1], [t1, c1] = GRADIENT[i];
+    if (t <= t1) {
+      const u = (t - t0) / (t1 - t0 || 1);
+      const r = Math.round(c0[0] + (c1[0]-c0[0])*u);
+      const g = Math.round(c0[1] + (c1[1]-c0[1])*u);
+      const b = Math.round(c0[2] + (c1[2]-c0[2])*u);
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+  return "#E3E6EA";
+}
+function gradientCss() {
+  return "linear-gradient(90deg," + GRADIENT.map(([t, c]) =>
+    `rgb(${c.join(",")}) ${(t*100).toFixed(0)}%`).join(",") + ")";
+}
+
+// Províncias cuja área contém uma "nova" criada em 2024
+const NOVAS_ASSOCIADAS = {
+  "ine_ipcn_luanda":     { nova: "Icolo e Bengo",  nota: "Em 2024 Icolo e Bengo foi separada de Luanda. IPCN ainda agregado." },
+  "ine_ipcn_c_cubango":  { nova: "Cuando",         nota: "Em 2024 Cuando foi separada do Cuando Cubango. IPCN ainda agregado." },
+  "ine_ipcn_moxico":     { nova: "Moxico Leste",   nota: "Em 2024 Moxico Leste foi separada de Moxico. IPCN ainda agregado." },
+};
+
+let dadosPorProv = {};
+let paths = null;
+let mode = "mes"; // ou "acum"
+
+(async () => {
+  [paths] = await Promise.all([
+    fetch("/static/angola-paths.json").then(r => r.json()),
+  ]);
+  // baixa observações por província
+  const lote = await api.lote(Object.keys(paths.paths), "2023-01");
+  for (const [sid, d] of Object.entries(lote)) {
+    dadosPorProv[sid] = { nome: paths.paths[sid].nome, obs: d.observacoes, last: d.observacoes.at(-1) };
+  }
+  render();
+
+  // toolbar mode switch
+  for (const b of document.querySelectorAll(".toolbar button")) {
+    b.addEventListener("click", () => {
+      mode = b.dataset.mode;
+      document.querySelectorAll(".toolbar button").forEach(x => x.classList.toggle("on", x === b));
+      render();
+    });
+  }
+})();
+
+function valorAtual(d) {
+  if (!d?.obs?.length) return null;
+  if (mode === "mes") return d.last?.valor;
+  // Acumulada: soma dos últimos 12 meses de variações (aproximação)
+  const ult = d.obs.slice(-12);
+  return ult.reduce((a, o) => a + (o.valor || 0), 0);
+}
+
+function render() {
+  const svg = document.getElementById("mapa");
+  svg.innerHTML = "";
+  svg.setAttribute("viewBox", paths.viewBox);
+
+  const vals = Object.entries(dadosPorProv).map(([sid, d]) => [sid, valorAtual(d)]).filter(([_, v]) => v != null);
+  const minV = Math.min(...vals.map(([_, v]) => v));
+  const maxV = Math.max(...vals.map(([_, v]) => v));
+
+  // paths
+  for (const [sid, info] of Object.entries(paths.paths)) {
+    const v = valorAtual(dadosPorProv[sid]);
+    const t = v != null ? (v - minV) / (maxV - minV || 1) : null;
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("d", info.d);
+    p.setAttribute("data-sid", sid);
+    p.setAttribute("data-valor", v ?? "");
+    p.setAttribute("fill", cor(t));
+    p.setAttribute("tabindex", "0");
+    p.setAttribute("role", "button");
+    p.setAttribute("aria-label", `${info.nome}: ${v != null ? fmt(v,2) + '%' : 'sem dados'}`);
+    svg.appendChild(p);
+  }
+
+  // labels nas províncias grandes (calculados a partir do bbox)
+  for (const [sid, info] of Object.entries(paths.paths)) {
+    const tmp = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    tmp.setAttribute("d", info.d);
+    svg.appendChild(tmp);
+    const bb = tmp.getBBox();
+    svg.removeChild(tmp);
+    if (bb.width * bb.height < 1800) continue; // só nas grandes
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("class", bb.width * bb.height > 6000 ? "label" : "label-sm");
+    label.setAttribute("x", bb.x + bb.width/2);
+    label.setAttribute("y", bb.y + bb.height/2);
+    label.setAttribute("text-anchor", "middle");
+    label.textContent = info.nome;
+    svg.appendChild(label);
+  }
+
+  // legenda
+  document.getElementById("legmin").textContent = fmt(minV, 2) + "%";
+  document.getElementById("legmax").textContent = fmt(maxV, 2) + "%";
+  document.getElementById("legbar").style.background = gradientCss();
+  const anyLast = Object.values(dadosPorProv).find(d => d.last)?.last?.periodo;
+  document.getElementById("periodo-ref").textContent = anyLast || "—";
+
+  // ranking
+  const rank = Object.entries(dadosPorProv)
+    .map(([sid, d]) => [sid, d, valorAtual(d)])
+    .filter(([_, __, v]) => v != null)
+    .sort((a, b) => a[2] - b[2]);
+  const rankEl = document.getElementById("rank");
+  rankEl.innerHTML = "";
+  for (const [sid, d, v] of rank) {
+    const t = (v - minV) / (maxV - minV || 1);
+    const li = document.createElement("li");
+    li.dataset.sid = sid;
+    li.innerHTML = `<button type="button"><span><span class="dot" style="background:${cor(t)}"></span>${d.nome}</span><span style="color:#4B5563">${fmt(v,2)}%</span></button>`;
+    li.querySelector("button").addEventListener("click", () => mostrar(sid));
+    rankEl.appendChild(li);
+  }
+
+  mostrar("ine_ipcn_luanda");
+}
+
+const tt = document.getElementById("tt");
+document.getElementById("mapa").addEventListener("pointermove", (e) => {
+  const p = e.target.closest("path[data-sid]");
+  if (!p) { tt.classList.remove("on"); return; }
+  const sid = p.dataset.sid;
+  const d = dadosPorProv[sid];
+  const v = valorAtual(d);
+  tt.innerHTML = `<strong>${d?.nome || sid}</strong><span class="v">${v != null ? fmt(v,2)+'%' : 'sem dados'}</span>`;
+  const rect = document.getElementById("map-area").getBoundingClientRect();
+  tt.style.left = (e.clientX - rect.left) + "px";
+  tt.style.top = (e.clientY - rect.top) + "px";
+  tt.classList.add("on");
+});
+document.getElementById("mapa").addEventListener("keydown", (e) => {
+  const sid = e.target.closest("path[data-sid]")?.dataset.sid;
+  if (sid && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); mostrar(sid); }
+});
+document.getElementById("mapa").addEventListener("pointerleave", () => tt.classList.remove("on"));
+document.getElementById("mapa").addEventListener("click", (e) => {
+  const sid = e.target.closest("path[data-sid]")?.dataset.sid;
+  if (sid) mostrar(sid);
+});
+
+function mostrar(sid) {
+  const svg = document.getElementById("mapa");
+  for (const p of svg.querySelectorAll("path")) p.classList.toggle("sel", p.dataset.sid === sid);
+  for (const li of document.querySelectorAll("#rank li")) li.classList.toggle("sel", li.dataset.sid === sid);
+  const d = dadosPorProv[sid];
+  if (!d) return;
+  const v = valorAtual(d);
+  const nova = NOVAS_ASSOCIADAS[sid];
+  document.getElementById("prov-nome").innerHTML = `${d.nome}${nova ? ` <span class="tag-nova" title="${nova.nota}">+ ${nova.nova}</span>` : ""}`;
+  document.getElementById("prov-valor").textContent = v != null ? fmt(v,2) + "%" : "—";
+  document.getElementById("prov-periodo").textContent = d.last ? `IPCN · ${mode === "mes" ? "variação mensal" : "soma 12 meses"} · ${d.last.periodo}` : "sem dados";
+  drawSparkline(document.getElementById("info").querySelector(".spark svg"), d.obs);
+  const link = document.getElementById("prov-link");
+  link.href = `/painel.html?s=${sid}`;
+  link.hidden = false;
+}
+</script>
+</body>
+</html>
